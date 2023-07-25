@@ -1,0 +1,9 @@
+°npm create vite@latest
+°npm i
+
+npm i react-router-dom
+
+npm i styled-components
+npm i @types/styled-components
+
+npm i @phosphor-icons/react
