@@ -13,7 +13,7 @@ export const InputArea = styled.div`
   }
 
   > input {
-    flex: 1;
+    flex:1 1 0%;
     border: 0;
     border-radius: 8px;
     background: ${(props) => props.theme["gray-300"]};
@@ -32,7 +32,7 @@ export const MetasContainer = styled.div`
 
 export const BaseAreas = styled.div`
   /* max-width: 19.7rem; */
-  flex: 1 1 0%;
+  flex:1 1 0%;
   overflow-wrap: break-word;
 
   > h2 {
@@ -53,6 +53,15 @@ export const BaseAreas = styled.div`
     flex-direction: column;
     gap: 1.5rem;
   }
+
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap:anywhere;
+  }
 `;
 
 export const DiariasArea = styled(BaseAreas)``;
@@ -61,7 +70,7 @@ export const SemanaisArea = styled(BaseAreas)``;
 
 export const MetasArea = styled.div`
   background: black;
-  flex: 1;
+  flex:1 1 0%;
 `;
 
 export const CardWrapper = styled.li`

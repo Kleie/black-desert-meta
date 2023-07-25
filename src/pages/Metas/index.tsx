@@ -1,12 +1,5 @@
 import { Card } from "../../components/UI/Card";
-import {
-  CardWrapper,
-  DiariasArea,
-  InputArea,
-  MetasArea,
-  MetasContainer,
-  SemanaisArea,
-} from "./styles";
+import { InputArea, MetasContainer, BaseAreas, CardWrapper, DiariasArea, MetasArea, SemanaisArea } from "./styles";
 
 export function Metas() {
   return (
