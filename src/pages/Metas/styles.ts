@@ -6,6 +6,13 @@ export const ModalButtonContainer = styled.div`
     border-radius: 4px;
     background-color: ${(props) => props.theme["brown-200"]};
     color: ${(props) => props.theme.white};
+<<<<<<< HEAD
+=======
+  }
+
+  > input {
+    flex:1 1 0%;
+>>>>>>> d219c923550ea69d1b322465c0af5c6f72944e81
     border: 0;
     cursor: pointer;
   }
@@ -17,18 +24,60 @@ export const MetasContainer = styled.div`
 `;
 
 export const BaseAreas = styled.div`
+<<<<<<< HEAD
   flex: 1 1 0%;
   overflow-wrap: break-word;
+=======
+  /* max-width: 19.7rem; */
+  flex:1 1 0%;
+  overflow-wrap: break-word;
+
+  > h2 {
+    padding: 1.5rem 0;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  > h2 > span {
+    font-size: 0.75rem;
+    color: ${(props) => props.theme["gray-100"]};
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap:anywhere;
+  }
+>>>>>>> d219c923550ea69d1b322465c0af5c6f72944e81
 `;
 
 export const DiariasArea = styled(BaseAreas)``;
 
+<<<<<<< HEAD
 export const TitleDiariasArea = styled.h2`
   padding: 1.5rem 0;
   font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+=======
+export const SemanaisArea = styled(BaseAreas)``;
+
+export const MetasArea = styled.div`
+  background: black;
+  flex:1 1 0%;
+>>>>>>> d219c923550ea69d1b322465c0af5c6f72944e81
 `;
 
 export const TimeInTitleDiariasArea = styled.span`

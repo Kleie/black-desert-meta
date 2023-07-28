@@ -2,12 +2,15 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-
   min-height: 100vh;
 `;
 
 export const ContentWrapper = styled.div`
-  flex: 1;
+  flex:1 1 0%;
+  margin-top:0.75rem;
+
+  display:flex;
+  flex-direction: column;
 
   padding: 3rem 2rem;
 
@@ -25,6 +28,7 @@ export const ContentWrapper = styled.div`
   }
 
   main {
+    flex:1 1 0%;
     display: flex;
     flex-direction: column;
     gap: 1.68rem;

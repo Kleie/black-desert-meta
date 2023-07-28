@@ -1,4 +1,5 @@
 import { Card } from "../../components/UI/Card";
+<<<<<<< HEAD
 import {
   CardContainerDiariasArea,
   CardContainerMetaArea,
@@ -17,6 +18,9 @@ import {
   TitleMetaArea,
   TitleSemanaisArea,
 } from "./styles";
+=======
+import { InputArea, MetasContainer, BaseAreas, CardWrapper, DiariasArea, MetasArea, SemanaisArea } from "./styles";
+>>>>>>> d219c923550ea69d1b322465c0af5c6f72944e81
 
 import itemTeste from "../../assets/Item-test.svg.svg";
 import { Trash } from "@phosphor-icons/react";
