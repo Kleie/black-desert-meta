@@ -1,81 +1,130 @@
 import { Card } from "../../components/UI/Card";
 import {
-  CardWrapper,
+  CardContainerDiariasArea,
+  CardContainerMetaArea,
+  CardContainerSemanaisArea,
+  CardWrapperDiariasAndSemanais,
+  CardWrapperMetaArea,
   DiariasArea,
-  InputArea,
   MetasArea,
   MetasContainer,
+  ModalButtonContainer,
   SemanaisArea,
+  TimeInTitleDiariasArea,
+  TimeInTitleSemanaisArea,
+  TitleCard,
+  TitleDiariasArea,
+  TitleMetaArea,
+  TitleSemanaisArea,
 } from "./styles";
 
+import itemTeste from "../../assets/Item-test.svg.svg";
+import { Trash } from "@phosphor-icons/react";
+import { Modal } from "../../components/Modal";
+
+import { useMetaContext } from "../../hooks/useMetaContext";
+
 export function Metas() {
+  const { modalVisibility, handleOpenModal, diariaList, semanalList } = useMetaContext();
+
   return (
     <>
-      <InputArea>
-        <button>** Coluna</button>
-        <input
-          type="text"
-          placeholder="Adicionar: Diarias - Semanais - Metas"
-        />
-        {/*faltando icone aq  */}
-      </InputArea>
+      {modalVisibility && <Modal />}
 
+      <ModalButtonContainer>
+        <button onClick={handleOpenModal}>Adicionar uma nova meta</button>
+      </ModalButtonContainer>
       <MetasContainer>
         <DiariasArea>
-          <h2>
-            Diárias <span>2h horas restante</span>
-          </h2>
-          <ul>
-            <CardWrapper>
-              <Card padding={1.5}>
-                <h3>Jettina</h3>
-                <p>
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </p>
-              </Card>
-            </CardWrapper>
-            <CardWrapper>
-              <Card padding={1.5}>
-                <h3>Jettina</h3>
-                <p>
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </p>
-              </Card>
-            </CardWrapper>
-            <CardWrapper>
-              <Card padding={1.5}>
-                <h3>Jettina</h3>
-                <p>
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </p>
-              </Card>
-            </CardWrapper>
-          </ul>
+          <TitleDiariasArea>
+            Diárias
+            <TimeInTitleDiariasArea>2h horas restante</TimeInTitleDiariasArea>
+          </TitleDiariasArea>
+
+          <CardContainerDiariasArea>
+            {diariaList.length > 0 ? (
+              diariaList.map((diaria) => {
+                return (
+                  <Card padding={1.5} key={diaria.id}>
+                    <TitleCard>
+                      <h3>{diaria.title}</h3>
+                      <button>
+                        <Trash size={20} color="#A9543F" />
+                      </button>
+                    </TitleCard>
+                    <p>{diaria.description}</p>
+                  </Card>
+                );
+              })
+            ) : (
+              <span>Sem Diaria</span>
+            )}
+          </CardContainerDiariasArea>
         </DiariasArea>
 
         <SemanaisArea>
-          <h2>
-            Semanais <span>2h horas restante</span>
-          </h2>
-          <ul>
-            <CardWrapper>
-              <Card padding={1.5}>
-                <h3>Jettina</h3>
-                <p>
-                  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </p>
-              </Card>
-            </CardWrapper>
-          </ul>
+          <TitleSemanaisArea>
+            Semanais
+            <TimeInTitleSemanaisArea>2h horas restante</TimeInTitleSemanaisArea>
+          </TitleSemanaisArea>
+
+          <CardContainerSemanaisArea>
+            <CardWrapperDiariasAndSemanais>
+              {semanalList.length > 0 ? (
+                semanalList.map((diaria) => {
+                  return (
+                    <Card padding={1.5} key={diaria.id}>
+                      <TitleCard>
+                        <h3>{diaria.title}</h3>
+                        <button>
+                          <Trash size={20} color="#A9543F" />
+                        </button>
+                      </TitleCard>
+                      <p>{diaria.description}</p>
+                    </Card>
+                  );
+                })
+              ) : (
+                <span>Sem semanal</span>
+              )}
+            </CardWrapperDiariasAndSemanais>
+          </CardContainerSemanaisArea>
         </SemanaisArea>
 
         <MetasArea>
-          <h2>titulo</h2>
-          <ul>
-            <li>item1</li>
-            <li>item1</li>
-            <li>item1</li>
-          </ul>
+          <TitleMetaArea>Metas</TitleMetaArea>
+
+          <CardContainerMetaArea>
+            <CardWrapperMetaArea>
+              <Card>
+                <img src={itemTeste} alt="" />
+                <div>
+                  <h3>Cinto Tungrade V</h3>
+                  <p>10.000.000</p>
+                </div>
+              </Card>
+            </CardWrapperMetaArea>
+
+            <CardWrapperMetaArea>
+              <Card>
+                <img src={itemTeste} alt="" />
+                <div>
+                  <h3>Cinto Tungrade V</h3>
+                  <p>10.000.000</p>
+                </div>
+              </Card>
+            </CardWrapperMetaArea>
+
+            <CardWrapperMetaArea>
+              <Card>
+                <img src={itemTeste} alt="" />
+                <div>
+                  <h3>Cinto Tungrade V</h3>
+                  <p>10.000.000</p>
+                </div>
+              </Card>
+            </CardWrapperMetaArea>
+          </CardContainerMetaArea>
         </MetasArea>
       </MetasContainer>
     </>

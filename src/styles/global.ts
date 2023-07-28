@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 
         list-style: none;
         text-decoration: none;
+        outline:none;
     }
 
     body {
