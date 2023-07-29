@@ -104,23 +104,13 @@ export const FooterModal = styled.div`
   gap: 1.125rem;
   padding: 32px 0px 0 163px;
 
-  button {
-    color: ${(props) => props.theme.white};
-    cursor: pointer;
-  }
-
-  :first-child {
-    border: 0;
-    border-radius: 4px;
-    padding: 0.5rem 0.75rem;
-    background: ${(props) => props.theme["brown-500"]};
-  }
-
   button + button {
     background: transparent;
     border-radius: 4px;
     padding: 0.5rem 0.75rem;
     border: none;
+    cursor: pointer;
+    color: ${(props) => props.theme.white};
 
     transition: 0.2s;
 
@@ -128,4 +118,22 @@ export const FooterModal = styled.div`
       background: ${(props) => props.theme["black-300"]};
     }
   }
+`;
+
+export const ButtonWithContent = styled.button`
+  border: 0;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  background: ${(props) => props.theme["brown-500"]};
+  color: white;
+  cursor: pointer;
+`;
+
+export const ButtonWhitoutContent = styled.button`
+  cursor: not-allowed;
+  color: ${(props) => props.theme.white};
+  border: 0;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  background: ${(props) => props.theme["brown-500"]};
 `;

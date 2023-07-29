@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { DescriptionModal, FooterModal, ModalContainer, ModalWrapper, SelectMeta, TitleModal } from "./styled";
+import {
+  ButtonWhitoutContent,
+  ButtonWithContent,
+  DescriptionModal,
+  FooterModal,
+  ModalContainer,
+  ModalWrapper,
+  SelectMeta,
+  TitleModal,
+} from "./styled";
 import { useMetaContext } from "../../hooks/useMetaContext";
 
 export function Modal() {
@@ -60,7 +69,13 @@ export function Modal() {
           </div>
         </SelectMeta>
         <FooterModal>
-          <button onClick={onCreateNewMeta}>Adicionar</button>
+          {/* <button onClick={onCreateNewMeta}>Adicionar</button> */}
+
+          {titleInput.length > 0 && descriptionInput.length > 0 ? (
+            <ButtonWithContent onClick={onCreateNewMeta}>Adicionar</ButtonWithContent>
+          ) : (
+            <ButtonWhitoutContent>Adicionar</ButtonWhitoutContent>
+          )}
           <button onClick={handleCloseModal}>Cancelar</button>
         </FooterModal>
       </ModalWrapper>

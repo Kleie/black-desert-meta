@@ -13,6 +13,7 @@ interface ContextProps {
   handleOpenModal: () => void;
   handleCloseModal: () => void;
   handleCreateMeta: (title: string, description: string, type: "diaria" | "semanal") => void;
+  MetaListwithoutOne: (metaId: string, type: "diaria" | "semanal") => void;
   diariaList: MetaList[];
   semanalList: MetaList[];
 }
@@ -33,7 +34,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   }
 
   function handleCreateMeta(title: string, description: string, type: "diaria" | "semanal") {
-    type == "diaria" &&
+    type === "diaria" &&
       setDiariaList((prevstate) => {
         const newDiaria = {
           title,
@@ -43,7 +44,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         return [...prevstate, newDiaria];
       });
 
-    type == "semanal" &&
+    type === "semanal" &&
       setSemanalList((prevstate) => {
         const newDiaria = {
           title,
@@ -54,6 +55,18 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       });
   }
 
+  function MetaListwithoutOne(metaId: string, type: "diaria" | "semanal") {
+    type === "diaria" &&
+      setDiariaList((prevstate) => {
+        return prevstate.filter((item) => item.id !== metaId);
+      });
+
+    type === "semanal" &&
+      setSemanalList((prevstate) => {
+        return prevstate.filter((item) => item.id !== metaId);
+      });
+  }
+
   return (
     <Context.Provider
       value={{
@@ -61,6 +74,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         handleOpenModal,
         handleCloseModal,
         handleCreateMeta,
+        MetaListwithoutOne,
         diariaList,
         semanalList,
       }}

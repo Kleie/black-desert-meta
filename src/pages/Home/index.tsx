@@ -28,9 +28,15 @@ import {
   TitleProximaMeta,
   TitleSemanais,
 } from "./styles";
+
 import itemTeste from "../../assets/Item-test.svg.svg";
 import gyfinTeste from "../../assets/gyfin-teste.svg";
+
+import { useMetaContext } from "../../hooks/useMetaContext";
+
 export function Home() {
+  const { diariaList, semanalList } = useMetaContext();
+
   return (
     <HomeContainer>
       <MetaAndTrackerContainer>
@@ -135,20 +141,23 @@ export function Home() {
           <Diarias>
             <DiariasList>
               <CardDiariasWrapper>
-                <Card padding={1}>
-                  <h3>Jettina</h3>
-                  <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-                </Card>
-              </CardDiariasWrapper>
-              <CardDiariasWrapper>
-                <Card padding={1}>
-                  <h3>Jettina</h3>
-                  <p>aaaaaaaaa</p>
-                </Card>
+                {diariaList.length > 0 ? (
+                  diariaList.map((diaria) => {
+                    return (
+                      <Card padding={1} key={diaria.id}>
+                        <h3>{diaria.title}</h3>
+                        <p>{diaria.description}</p>
+                      </Card>
+                    );
+                  })
+                ) : (
+                  <span>...</span>
+                )}
               </CardDiariasWrapper>
             </DiariasList>
           </Diarias>
         </DiariasContainer>
+
         <SemanaisContainer>
           <TitleSemanais>
             <h2>Semanais</h2>
@@ -161,16 +170,18 @@ export function Home() {
           <Semanais>
             <SemanaisList>
               <CardSemanaisWrapper>
-                <Card padding={1}>
-                  <h3>Jettina</h3>
-                  <p>aaaaaaaaa</p>
-                </Card>
-              </CardSemanaisWrapper>
-              <CardSemanaisWrapper>
-                <Card padding={1}>
-                  <h3>Jettina</h3>
-                  <p>aaaaaaaaa</p>
-                </Card>
+                {semanalList.length > 0 ? (
+                  semanalList.map((semanal) => {
+                    return (
+                      <Card padding={1} key={semanal.id}>
+                        <h3>{semanal.title}</h3>
+                        <p>{semanal.description}</p>
+                      </Card>
+                    );
+                  })
+                ) : (
+                  <span>...</span>
+                )}
               </CardSemanaisWrapper>
             </SemanaisList>
           </Semanais>

@@ -1,26 +1,23 @@
 import { Card } from "../../components/UI/Card";
-<<<<<<< HEAD
 import {
-  CardContainerDiariasArea,
-  CardContainerMetaArea,
-  CardContainerSemanaisArea,
-  CardWrapperDiariasAndSemanais,
-  CardWrapperMetaArea,
-  DiariasArea,
+  CardDiaria,
+  CardMeta,
+  CardSemanal,
+  CardWrapperDiaria,
+  CardWrapperMeta,
+  CardWrapperSemanal,
+  DiariaArea,
   MetasArea,
   MetasContainer,
-  ModalButtonContainer,
-  SemanaisArea,
-  TimeInTitleDiariasArea,
-  TimeInTitleSemanaisArea,
+  ModalWrapper,
+  SemanalArea,
+  TimeInTitleDiaria,
+  TimeInTitleSemanal,
   TitleCard,
-  TitleDiariasArea,
-  TitleMetaArea,
-  TitleSemanaisArea,
+  TitleDiaria,
+  TitleMeta,
+  TitleSemanal,
 } from "./styles";
-=======
-import { InputArea, MetasContainer, BaseAreas, CardWrapper, DiariasArea, MetasArea, SemanaisArea } from "./styles";
->>>>>>> d219c923550ea69d1b322465c0af5c6f72944e81
 
 import itemTeste from "../../assets/Item-test.svg.svg";
 import { Trash } from "@phosphor-icons/react";
@@ -29,58 +26,32 @@ import { Modal } from "../../components/Modal";
 import { useMetaContext } from "../../hooks/useMetaContext";
 
 export function Metas() {
-  const { modalVisibility, handleOpenModal, diariaList, semanalList } = useMetaContext();
+  const { modalVisibility, handleOpenModal, diariaList, semanalList, MetaListwithoutOne } = useMetaContext();
 
   return (
     <>
       {modalVisibility && <Modal />}
 
-      <ModalButtonContainer>
+      <ModalWrapper>
         <button onClick={handleOpenModal}>Adicionar uma nova meta</button>
-      </ModalButtonContainer>
+      </ModalWrapper>
+
       <MetasContainer>
-        <DiariasArea>
-          <TitleDiariasArea>
+        <DiariaArea>
+          <TitleDiaria>
             Diárias
-            <TimeInTitleDiariasArea>2h horas restante</TimeInTitleDiariasArea>
-          </TitleDiariasArea>
+            <TimeInTitleDiaria>2h horas restante</TimeInTitleDiaria>
+          </TitleDiaria>
 
-          <CardContainerDiariasArea>
-            {diariaList.length > 0 ? (
-              diariaList.map((diaria) => {
-                return (
-                  <Card padding={1.5} key={diaria.id}>
-                    <TitleCard>
-                      <h3>{diaria.title}</h3>
-                      <button>
-                        <Trash size={20} color="#A9543F" />
-                      </button>
-                    </TitleCard>
-                    <p>{diaria.description}</p>
-                  </Card>
-                );
-              })
-            ) : (
-              <span>Sem Diaria</span>
-            )}
-          </CardContainerDiariasArea>
-        </DiariasArea>
-
-        <SemanaisArea>
-          <TitleSemanaisArea>
-            Semanais
-            <TimeInTitleSemanaisArea>2h horas restante</TimeInTitleSemanaisArea>
-          </TitleSemanaisArea>
-
-          <CardContainerSemanaisArea>
-            <CardWrapperDiariasAndSemanais>
-              {semanalList.length > 0 ? (
-                semanalList.map((diaria) => {
+          <CardWrapperDiaria>
+            <CardDiaria>
+              {diariaList.length > 0 ? (
+                diariaList.map((diaria) => {
                   return (
                     <Card padding={1.5} key={diaria.id}>
                       <TitleCard>
                         <h3>{diaria.title}</h3>
-                        <button>
+                        <button onClick={() => MetaListwithoutOne(diaria.id, "diaria")}>
                           <Trash size={20} color="#A9543F" />
                         </button>
                       </TitleCard>
@@ -89,17 +60,46 @@ export function Metas() {
                   );
                 })
               ) : (
-                <span>Sem semanal</span>
+                <span>...</span>
               )}
-            </CardWrapperDiariasAndSemanais>
-          </CardContainerSemanaisArea>
-        </SemanaisArea>
+            </CardDiaria>
+          </CardWrapperDiaria>
+        </DiariaArea>
+
+        <SemanalArea>
+          <TitleSemanal>
+            Semanais
+            <TimeInTitleSemanal>2h horas restante</TimeInTitleSemanal>
+          </TitleSemanal>
+
+          <CardWrapperSemanal>
+            <CardSemanal>
+              {semanalList.length > 0 ? (
+                semanalList.map((semanal) => {
+                  return (
+                    <Card padding={1.5} key={semanal.id}>
+                      <TitleCard>
+                        <h3>{semanal.title}</h3>
+                        <button onClick={() => MetaListwithoutOne(semanal.id, "semanal")}>
+                          <Trash size={20} color="#A9543F" />
+                        </button>
+                      </TitleCard>
+                      <p>{semanal.description}</p>
+                    </Card>
+                  );
+                })
+              ) : (
+                <span>...</span>
+              )}
+            </CardSemanal>
+          </CardWrapperSemanal>
+        </SemanalArea>
 
         <MetasArea>
-          <TitleMetaArea>Metas</TitleMetaArea>
+          <TitleMeta>Metas</TitleMeta>
 
-          <CardContainerMetaArea>
-            <CardWrapperMetaArea>
+          <CardWrapperMeta>
+            <CardMeta>
               <Card>
                 <img src={itemTeste} alt="" />
                 <div>
@@ -107,9 +107,9 @@ export function Metas() {
                   <p>10.000.000</p>
                 </div>
               </Card>
-            </CardWrapperMetaArea>
+            </CardMeta>
 
-            <CardWrapperMetaArea>
+            <CardMeta>
               <Card>
                 <img src={itemTeste} alt="" />
                 <div>
@@ -117,9 +117,9 @@ export function Metas() {
                   <p>10.000.000</p>
                 </div>
               </Card>
-            </CardWrapperMetaArea>
+            </CardMeta>
 
-            <CardWrapperMetaArea>
+            <CardMeta>
               <Card>
                 <img src={itemTeste} alt="" />
                 <div>
@@ -127,8 +127,8 @@ export function Metas() {
                   <p>10.000.000</p>
                 </div>
               </Card>
-            </CardWrapperMetaArea>
-          </CardContainerMetaArea>
+            </CardMeta>
+          </CardWrapperMeta>
         </MetasArea>
       </MetasContainer>
     </>
