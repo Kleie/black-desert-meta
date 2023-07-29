@@ -46,6 +46,16 @@ export const CardDiaria = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  p {
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 // semanal area
@@ -72,6 +82,16 @@ export const CardSemanal = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  p {
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const TitleCard = styled.div`

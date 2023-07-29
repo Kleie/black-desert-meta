@@ -33,6 +33,7 @@ import itemTeste from "../../assets/Item-test.svg.svg";
 import gyfinTeste from "../../assets/gyfin-teste.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
+import { TimeLeft, WeekLeft } from "../../components/Time";
 
 export function Home() {
   const { diariaList, semanalList } = useMetaContext();
@@ -134,7 +135,7 @@ export function Home() {
             <h2>Diarias</h2>
             <div>
               <span>0 de 3</span>
-              <span>2 horas restantes</span>
+              <TimeLeft />
             </div>
           </TitleDiarias>
 
@@ -163,7 +164,7 @@ export function Home() {
             <h2>Semanais</h2>
             <div>
               <span>0 de 3</span>
-              <span>2 horas restantes</span>
+              <WeekLeft />
             </div>
           </TitleSemanais>
 
