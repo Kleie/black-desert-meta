@@ -1,13 +1,13 @@
 import { Card } from "../../components/UI/Card";
 import {
   CardDiaria,
-  CardMeta,
+  // CardMeta,
   CardSemanal,
   CardWrapperDiaria,
-  CardWrapperMeta,
+  // CardWrapperMeta,
   CardWrapperSemanal,
   DiariaArea,
-  MetasArea,
+  // MetasArea,
   MetasContainer,
   ModalWrapper,
   SemanalArea,
@@ -15,11 +15,11 @@ import {
   TimeInTitleSemanal,
   TitleCard,
   TitleDiaria,
-  TitleMeta,
+  // TitleMeta,
   TitleSemanal,
 } from "./styles";
 
-import itemTeste from "../../assets/Item-test.svg.svg";
+// import itemTeste from "../../assets/Item-test.svg.svg";
 import { Trash } from "@phosphor-icons/react";
 import { Modal } from "../../components/Modal";
 
@@ -95,7 +95,7 @@ export function Metas() {
           </CardWrapperSemanal>
         </SemanalArea>
 
-        <MetasArea>
+        {/* <MetasArea>
           <TitleMeta>Metas</TitleMeta>
 
           <CardWrapperMeta>
@@ -129,7 +129,7 @@ export function Metas() {
               </Card>
             </CardMeta>
           </CardWrapperMeta>
-        </MetasArea>
+        </MetasArea> */}
       </MetasContainer>
     </>
   );

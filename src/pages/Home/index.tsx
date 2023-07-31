@@ -1,17 +1,17 @@
 import { Card } from "../../components/UI/Card";
 import {
   CardDiariasWrapper,
-  CardGrindTrackerContainer,
-  CardListContainer,
+  // CardGrindTrackerContainer,
+  // CardListContainer,
   CardSemanaisWrapper,
   CardWrapper,
-  CardWrapperGrindTracker,
+  // CardWrapperGrindTracker,
   CardWrapperMetaAtual,
   Diarias,
   DiariasContainer,
   DiariasList,
   DiariasSemanaisContainer,
-  GrindTrackerContainer,
+  // GrindTrackerContainer,
   HomeContainer,
   MetaAndTrackerContainer,
   MetaAtualContainer,
@@ -24,14 +24,14 @@ import {
   SemanaisContainer,
   SemanaisList,
   TitleDiarias,
-  TitleGrindTracker,
+  // TitleGrindTracker,
   TitleMetaAtual,
   TitleProximaMeta,
   TitleSemanais,
 } from "./styles";
 
 import itemTeste from "../../assets/Item-test.svg.svg";
-import gyfinTeste from "../../assets/gyfin-teste.svg";
+// import gyfinTeste from "../../assets/gyfin-teste.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
 import { TimeLeft, WeekLeft } from "../../components/Time";
@@ -97,7 +97,7 @@ export function Home() {
           </ProximaMetaContainer>
         </MetaContainer>
 
-        <GrindTrackerContainer>
+        {/* <GrindTrackerContainer>
           <TitleGrindTracker>Grind Tracker</TitleGrindTracker>
           <CardGrindTrackerContainer>
             <CardListContainer>
@@ -139,7 +139,7 @@ export function Home() {
               </CardWrapperGrindTracker>
             </CardListContainer>
           </CardGrindTrackerContainer>
-        </GrindTrackerContainer>
+        </GrindTrackerContainer> */}
       </MetaAndTrackerContainer>
 
       <DiariasSemanaisContainer>
