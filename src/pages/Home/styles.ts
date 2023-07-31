@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 // container geral
 export const HomeContainer = styled.div`
@@ -203,6 +203,11 @@ export const DiariasList = styled.ul`
 `;
 
 export const CardDiariasWrapper = styled.li`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+
   /* div do componente card */
   & > div {
     display: flex;
@@ -267,6 +272,11 @@ export const SemanaisList = styled.ul`
 `;
 
 export const CardSemanaisWrapper = styled.li`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+
   /* div do componente card */
   & > div {
     display: flex;
@@ -288,4 +298,18 @@ export const CardSemanaisWrapper = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+`;
+
+interface MetaCardProps {
+  iscompleted: boolean;
+}
+
+export const MetaCardWrapper = styled.div<MetaCardProps>`
+  ${(props) =>
+    props.iscompleted
+      ? css`
+          opacity: 0.5;
+          text-decoration: line-through;
+        `
+      : ""}
 `;

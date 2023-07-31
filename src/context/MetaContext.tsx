@@ -1,12 +1,12 @@
 import { createContext, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 type MetaList = {
   title: string;
   description: string;
   id: string;
+  isCompleted: boolean;
 };
-
-import { v4 as uuid } from "uuid";
 
 interface ContextProps {
   modalVisibility: boolean;
@@ -14,6 +14,7 @@ interface ContextProps {
   handleCloseModal: () => void;
   handleCreateMeta: (title: string, description: string, type: "diaria" | "semanal") => void;
   MetaListwithoutOne: (metaId: string, type: "diaria" | "semanal") => void;
+  handleMetaCompleted: (id: string, type: "diaria" | "semanal") => void;
   diariaList: MetaList[];
   semanalList: MetaList[];
 }
@@ -40,6 +41,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
           title,
           description,
           id: uuid(),
+          isCompleted: false,
         };
         return [...prevstate, newDiaria];
       });
@@ -50,6 +52,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
           title,
           description,
           id: uuid(),
+          isCompleted: false,
         };
         return [...prevstate, newDiaria];
       });
@@ -67,6 +70,31 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       });
   }
 
+  function handleMetaCompleted(id: string, type: "diaria" | "semanal") {
+    type === "diaria" &&
+      setDiariaList((prevstate) => {
+        return prevstate.map((diaria) => {
+          if (diaria.id === id) {
+            return { ...diaria, isCompleted: !diaria.isCompleted };
+          }
+          return diaria;
+        });
+      });
+    // diariaList.map((diaria) => {
+    //   return diaria;
+    // });
+
+    type === "semanal" &&
+      setSemanalList((prevstate) => {
+        return prevstate.map((semanal) => {
+          if (semanal.id === id) {
+            return { ...semanal, isCompleted: !semanal.isCompleted };
+          }
+          return semanal;
+        });
+      });
+  }
+
   return (
     <Context.Provider
       value={{
@@ -75,6 +103,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         handleCloseModal,
         handleCreateMeta,
         MetaListwithoutOne,
+        handleMetaCompleted,
         diariaList,
         semanalList,
       }}

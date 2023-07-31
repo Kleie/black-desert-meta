@@ -15,6 +15,7 @@ import {
   HomeContainer,
   MetaAndTrackerContainer,
   MetaAtualContainer,
+  MetaCardWrapper,
   MetaContainer,
   ProgressBar,
   ProximaMetaContainer,
@@ -36,7 +37,19 @@ import { useMetaContext } from "../../hooks/useMetaContext";
 import { TimeLeft, WeekLeft } from "../../components/Time";
 
 export function Home() {
-  const { diariaList, semanalList } = useMetaContext();
+  const { diariaList, semanalList, handleMetaCompleted } = useMetaContext();
+
+  const diariasCompletas = diariaList.filter((diaria) => {
+    if (diaria.isCompleted === true) {
+      return diaria;
+    }
+  });
+
+  const semanaisCompletas = semanalList.filter((semanal) => {
+    if (semanal.isCompleted === true) {
+      return semanal;
+    }
+  });
 
   return (
     <HomeContainer>
@@ -134,7 +147,7 @@ export function Home() {
           <TitleDiarias>
             <h2>Diarias</h2>
             <div>
-              <span>0 de 3</span>
+              <span>{`concluidas ${diariasCompletas.length} de ${diariaList.length}`}</span>
               <TimeLeft />
             </div>
           </TitleDiarias>
@@ -145,10 +158,12 @@ export function Home() {
                 {diariaList.length > 0 ? (
                   diariaList.map((diaria) => {
                     return (
-                      <Card padding={1} key={diaria.id}>
-                        <h3>{diaria.title}</h3>
-                        <p>{diaria.description}</p>
-                      </Card>
+                      <MetaCardWrapper iscompleted={diaria.isCompleted}>
+                        <Card padding={1} key={diaria.id} onClick={() => handleMetaCompleted(diaria.id, "diaria")}>
+                          <h3>{diaria.title}</h3>
+                          <p>{diaria.description}</p>
+                        </Card>
+                      </MetaCardWrapper>
                     );
                   })
                 ) : (
@@ -163,7 +178,8 @@ export function Home() {
           <TitleSemanais>
             <h2>Semanais</h2>
             <div>
-              <span>0 de 3</span>
+              <span>{`concluidas ${semanaisCompletas.length} de ${semanalList.length}`}</span>
+
               <WeekLeft />
             </div>
           </TitleSemanais>
@@ -174,10 +190,12 @@ export function Home() {
                 {semanalList.length > 0 ? (
                   semanalList.map((semanal) => {
                     return (
-                      <Card padding={1} key={semanal.id}>
-                        <h3>{semanal.title}</h3>
-                        <p>{semanal.description}</p>
-                      </Card>
+                      <MetaCardWrapper iscompleted={semanal.isCompleted}>
+                        <Card padding={1} key={semanal.id} onClick={() => handleMetaCompleted(semanal.id, "semanal")}>
+                          <h3>{semanal.title}</h3>
+                          <p>{semanal.description}</p>
+                        </Card>
+                      </MetaCardWrapper>
                     );
                   })
                 ) : (

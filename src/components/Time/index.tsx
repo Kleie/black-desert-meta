@@ -16,10 +16,14 @@ export function TimeLeft() {
   }
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    function atualizarTempoRestante() {
       const tempoRestanteAtualizado = calcularTempoRestante();
       setTempoRestante(tempoRestanteAtualizado);
-    }, 60000);
+    }
+
+    atualizarTempoRestante(); // Atualiza o tempo restante imediatamente após o componente ser montado
+
+    const intervalId = setInterval(atualizarTempoRestante, 3600000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -41,10 +45,14 @@ export function WeekLeft() {
   }
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    function atualizarTempoRestante() {
       const tempoRestanteAtualizado = calcularTempoRestante();
       setTempoRestante(tempoRestanteAtualizado);
-    }, 60000);
+    }
+
+    atualizarTempoRestante(); // Atualiza o tempo restante imediatamente após o componente ser montado
+
+    const intervalId = setInterval(atualizarTempoRestante, 3600000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -66,10 +74,14 @@ export function TerraDoAmanhecer() {
   }
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    function atualizarTempoRestante() {
       const tempoRestanteAtualizado = calcularTempoRestante();
       setTempoRestante(tempoRestanteAtualizado);
-    }, 60000);
+    }
+
+    atualizarTempoRestante(); // Atualiza o tempo restante imediatamente após o componente ser montado
+
+    const intervalId = setInterval(atualizarTempoRestante, 3600000);
 
     return () => clearInterval(intervalId);
   }, []);
