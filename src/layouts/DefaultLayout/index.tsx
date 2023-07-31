@@ -1,7 +1,7 @@
 import { Nav } from "../../components/Nav";
 import { Outlet, useLocation } from "react-router-dom";
 import { Container, ContentWrapper } from "./styles";
-import { ContextProvider } from "../../context/metaContext";
+import { ContextProvider } from "../../context/MetaContext";
 
 export function DefaultLayout() {
   const { pathname } = useLocation();
