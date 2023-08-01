@@ -15,6 +15,7 @@ interface ContextProps {
   handleCreateMeta: (title: string, description: string, type: "diaria" | "semanal") => void;
   MetaListwithoutOne: (metaId: string, type: "diaria" | "semanal") => void;
   handleMetaCompleted: (id: string, type: "diaria" | "semanal") => void;
+  handleResetAllMetas: (type: "diaria" | "semanal") => void;
   diariaList: MetaList[];
   semanalList: MetaList[];
 }
@@ -95,6 +96,22 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       });
   }
 
+  function handleResetAllMetas(type: "diaria" | "semanal") {
+    if (type === "diaria") {
+      const resetAll = diariaList.map((diaria) => {
+        diaria.isCompleted = false;
+        return diaria;
+      });
+      setDiariaList(resetAll);
+    } else {
+      const resetAll = semanalList.map((semanal) => {
+        semanal.isCompleted = false;
+        return semanal;
+      });
+      setSemanalList(resetAll);
+    }
+  }
+
   return (
     <Context.Provider
       value={{
@@ -104,6 +121,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         handleCreateMeta,
         MetaListwithoutOne,
         handleMetaCompleted,
+        handleResetAllMetas,
         diariaList,
         semanalList,
       }}

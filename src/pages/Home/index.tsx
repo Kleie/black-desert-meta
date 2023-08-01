@@ -4,9 +4,9 @@ import {
   // CardGrindTrackerContainer,
   // CardListContainer,
   CardSemanaisWrapper,
-  CardWrapper,
+  // CardWrapper,
   // CardWrapperGrindTracker,
-  CardWrapperMetaAtual,
+  // CardWrapperMetaAtual,
   Diarias,
   DiariasContainer,
   DiariasList,
@@ -18,26 +18,27 @@ import {
   MetaCardWrapper,
   MetaContainer,
   ProgressBar,
-  ProximaMetaContainer,
-  ProximaMetaList,
+  // ProximaMetaContainer,
+  // ProximaMetaList,
   Semanais,
   SemanaisContainer,
   SemanaisList,
   TitleDiarias,
   // TitleGrindTracker,
   TitleMetaAtual,
-  TitleProximaMeta,
+  // TitleProximaMeta,
   TitleSemanais,
 } from "./styles";
 
-import itemTeste from "../../assets/Item-test.svg.svg";
+// import itemTeste from "../../assets/Item-test.svg.svg";
 // import gyfinTeste from "../../assets/gyfin-teste.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
 import { TimeLeft, WeekLeft } from "../../components/Time";
+import { ArrowCounterClockwise } from "@phosphor-icons/react";
 
 export function Home() {
-  const { diariaList, semanalList, handleMetaCompleted } = useMetaContext();
+  const { diariaList, semanalList, handleMetaCompleted, handleResetAllMetas } = useMetaContext();
 
   const diariasCompletas = diariaList.filter((diaria) => {
     if (diaria.isCompleted === true) {
@@ -61,7 +62,7 @@ export function Home() {
             </TitleMetaAtual>
             {/* barra de progresso aqui */}
             <ProgressBar></ProgressBar>
-            <CardWrapperMetaAtual>
+            {/* <CardWrapperMetaAtual>
               <Card padding={0.5}>
                 <img src={itemTeste} alt="" />
                 <div>
@@ -69,10 +70,10 @@ export function Home() {
                   <p>10.000.000</p>
                 </div>{" "}
               </Card>
-            </CardWrapperMetaAtual>
+            </CardWrapperMetaAtual> */}
           </MetaAtualContainer>
 
-          <ProximaMetaContainer>
+          {/* <ProximaMetaContainer>
             <TitleProximaMeta>Proximas Metas</TitleProximaMeta>
             <ProximaMetaList>
               <CardWrapper>
@@ -94,7 +95,7 @@ export function Home() {
                 </Card>
               </CardWrapper>
             </ProximaMetaList>
-          </ProximaMetaContainer>
+          </ProximaMetaContainer> */}
         </MetaContainer>
 
         {/* <GrindTrackerContainer>
@@ -146,6 +147,7 @@ export function Home() {
         <DiariasContainer>
           <TitleDiarias>
             <h2>Diarias</h2>
+            <ArrowCounterClockwise onClick={() => handleResetAllMetas("diaria")} />
             <div>
               <span>{`concluidas ${diariasCompletas.length} de ${diariaList.length}`}</span>
               <TimeLeft />
@@ -177,6 +179,7 @@ export function Home() {
         <SemanaisContainer>
           <TitleSemanais>
             <h2>Semanais</h2>
+            <ArrowCounterClockwise onClick={() => handleResetAllMetas("semanal")} />
             <div>
               <span>{`concluidas ${semanaisCompletas.length} de ${semanalList.length}`}</span>
 

@@ -47,14 +47,18 @@ export const CardDiaria = styled.li`
   flex-direction: column;
   gap: 1.5rem;
 
+  h3,
   p {
-    font-size: 0.75rem;
     overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  p {
+    font-size: 0.75rem;
   }
 `;
 
@@ -83,14 +87,18 @@ export const CardSemanal = styled.li`
   flex-direction: column;
   gap: 1.5rem;
 
+  h3,
   p {
-    font-size: 0.75rem;
     overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  p {
+    font-size: 0.75rem;
   }
 `;
 

@@ -192,6 +192,10 @@ export const TitleDiarias = styled.div`
     font-size: 0.75rem;
     color: ${(props) => props.theme["gray-100"]};
   }
+
+  & > :nth-child(2) {
+    cursor: pointer;
+  }
 `;
 
 export const Diarias = styled.div``;
@@ -200,13 +204,16 @@ export const DiariasList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  max-height: 21.125rem;
+  overflow: auto;
+  overflow-x: hidden;
 `;
 
 export const CardDiariasWrapper = styled.li`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  cursor: pointer;
 
   /* div do componente card */
   & > div {
@@ -222,6 +229,10 @@ export const CardDiariasWrapper = styled.li`
   p {
     color: ${(props) => props.theme["brown-300"]};
     font-size: 0.875rem;
+  }
+
+  h3,
+  p {
     overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -261,6 +272,10 @@ export const TitleSemanais = styled.div`
     font-size: 0.75rem;
     color: ${(props) => props.theme["gray-100"]};
   }
+
+  & > :nth-child(2) {
+    cursor: pointer;
+  }
 `;
 
 export const Semanais = styled.div``;
@@ -269,13 +284,17 @@ export const SemanaisList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  max-height: 21.125rem;
+  overflow: auto;
+  overflow-x: hidden;
 `;
 
 export const CardSemanaisWrapper = styled.li`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  cursor: pointer;
+  /* cursor: pointer; */
 
   /* div do componente card */
   & > div {
@@ -291,6 +310,10 @@ export const CardSemanaisWrapper = styled.li`
   p {
     color: ${(props) => props.theme["brown-300"]};
     font-size: 0.875rem;
+  }
+
+  h3,
+  p {
     overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -305,10 +328,15 @@ interface MetaCardProps {
 }
 
 export const MetaCardWrapper = styled.div<MetaCardProps>`
+  max-height: ${(props) => (props.iscompleted ? "0" : "1000px")};
+  opacity: ${(props) => (props.iscompleted ? "0" : "1")};
+  cursor: ${(props) => (props.iscompleted ? "default" : "pointer")};
+  overflow: hidden;
+  transition: 0.5s;
+  text-decoration: none;
   ${(props) =>
     props.iscompleted
       ? css`
-          opacity: 0.5;
           text-decoration: line-through;
         `
       : ""}
