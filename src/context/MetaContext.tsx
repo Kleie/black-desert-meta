@@ -1,31 +1,139 @@
-import { createContext, useState } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
-type MetaList = {
+export interface User {
+  id: string;
+  username: string;
+  diaries: Diary[];
+  weeklies: Weekly[];
+}
+
+export interface Diary {
+  id: string;
   title: string;
   description: string;
-  id: string;
+  createdAt: string;
   isCompleted: boolean;
-};
+}
+
+export interface Weekly {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  isCompleted: boolean;
+}
 
 interface ContextProps {
   modalVisibility: boolean;
   handleOpenModal: () => void;
   handleCloseModal: () => void;
   handleCreateMeta: (title: string, description: string, type: "diaria" | "semanal") => void;
-  MetaListwithoutOne: (metaId: string, type: "diaria" | "semanal") => void;
+  handleDeleteMeta: (metaId: string, type: "diaria" | "semanal") => void;
   handleMetaCompleted: (id: string, type: "diaria" | "semanal") => void;
   handleResetAllMetas: (type: "diaria" | "semanal") => void;
-  diariaList: MetaList[];
-  semanalList: MetaList[];
+  user: User;
 }
 
 export const Context = createContext({} as ContextProps);
 
 export function ContextProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState({} as User);
   const [modalVisibility, setModalVisibility] = useState(false);
-  const [diariaList, setDiariaList] = useState([] as MetaList[]);
-  const [semanalList, setSemanalList] = useState([] as MetaList[]);
+
+  useEffect(() => {
+    async function getUserData() {
+      const res = await axios.get("http://localhost:3000/users/1");
+      setUser(res.data);
+    }
+    getUserData();
+  }, []);
+
+  function handleCreateMeta(title: string, description: string, type: "diaria" | "semanal") {
+    const newUser = { ...user };
+
+    if (type === "diaria") {
+      newUser.diaries.push({
+        id: uuid(),
+        title: title,
+        description: description,
+        isCompleted: false,
+        createdAt: new Date().toISOString(),
+      });
+    }
+
+    if (type === "semanal") {
+      newUser.weeklies.push({
+        id: uuid(),
+        title: title,
+        description: description,
+        isCompleted: false,
+        createdAt: new Date().toISOString(),
+      });
+    }
+    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+  }
+
+  function handleDeleteMeta(metaId: string, type: "diaria" | "semanal") {
+    const newUser = { ...user };
+
+    if (type === "diaria") {
+      const newDiary = newUser.diaries.filter((diary) => metaId !== diary.id);
+      newUser.diaries = newDiary;
+    }
+    if (type === "semanal") {
+      const newWeekly = newUser.weeklies.filter((weekly) => metaId !== weekly.id);
+      newUser.weeklies = newWeekly;
+    }
+
+    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+  }
+
+  function handleMetaCompleted(id: string, type: "diaria" | "semanal") {
+    const newUser = { ...user };
+
+    if (type === "diaria") {
+      const newDiary = newUser.diaries.map((diary) => {
+        if (diary.id === id) {
+          diary.isCompleted = !diary.isCompleted;
+          return diary;
+        }
+        return diary;
+      });
+      newUser.diaries = newDiary;
+    }
+    if (type === "semanal") {
+      const newWeekly = newUser.weeklies.map((weekly) => {
+        if (weekly.id === id) {
+          weekly.isCompleted = !weekly.isCompleted;
+          return weekly;
+        }
+        return weekly;
+      });
+      newUser.weeklies = newWeekly;
+    }
+    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+  }
+
+  function handleResetAllMetas(type: "diaria" | "semanal") {
+    const newUser = { ...user };
+    if (type === "diaria") {
+      const newDiary = newUser.diaries.map((diary) => {
+        diary.isCompleted = !diary.isCompleted;
+        return diary;
+      });
+      newUser.diaries = newDiary;
+    }
+    if (type === "semanal") {
+      const newWeekly = newUser.weeklies.map((weekly) => {
+        weekly.isCompleted = !weekly.isCompleted;
+        return weekly;
+      });
+      newUser.weeklies = newWeekly;
+    }
+    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+  }
 
   function handleOpenModal() {
     setModalVisibility(true);
@@ -35,83 +143,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     setModalVisibility(false);
   }
 
-  function handleCreateMeta(title: string, description: string, type: "diaria" | "semanal") {
-    type === "diaria" &&
-      setDiariaList((prevstate) => {
-        const newDiaria = {
-          title,
-          description,
-          id: uuid(),
-          isCompleted: false,
-        };
-        return [...prevstate, newDiaria];
-      });
-
-    type === "semanal" &&
-      setSemanalList((prevstate) => {
-        const newDiaria = {
-          title,
-          description,
-          id: uuid(),
-          isCompleted: false,
-        };
-        return [...prevstate, newDiaria];
-      });
-  }
-
-  function MetaListwithoutOne(metaId: string, type: "diaria" | "semanal") {
-    type === "diaria" &&
-      setDiariaList((prevstate) => {
-        return prevstate.filter((item) => item.id !== metaId);
-      });
-
-    type === "semanal" &&
-      setSemanalList((prevstate) => {
-        return prevstate.filter((item) => item.id !== metaId);
-      });
-  }
-
-  function handleMetaCompleted(id: string, type: "diaria" | "semanal") {
-    type === "diaria" &&
-      setDiariaList((prevstate) => {
-        return prevstate.map((diaria) => {
-          if (diaria.id === id) {
-            return { ...diaria, isCompleted: !diaria.isCompleted };
-          }
-          return diaria;
-        });
-      });
-    // diariaList.map((diaria) => {
-    //   return diaria;
-    // });
-
-    type === "semanal" &&
-      setSemanalList((prevstate) => {
-        return prevstate.map((semanal) => {
-          if (semanal.id === id) {
-            return { ...semanal, isCompleted: !semanal.isCompleted };
-          }
-          return semanal;
-        });
-      });
-  }
-
-  function handleResetAllMetas(type: "diaria" | "semanal") {
-    if (type === "diaria") {
-      const resetAll = diariaList.map((diaria) => {
-        diaria.isCompleted = false;
-        return diaria;
-      });
-      setDiariaList(resetAll);
-    } else {
-      const resetAll = semanalList.map((semanal) => {
-        semanal.isCompleted = false;
-        return semanal;
-      });
-      setSemanalList(resetAll);
-    }
-  }
-
   return (
     <Context.Provider
       value={{
@@ -119,11 +150,10 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         handleOpenModal,
         handleCloseModal,
         handleCreateMeta,
-        MetaListwithoutOne,
+        handleDeleteMeta,
         handleMetaCompleted,
         handleResetAllMetas,
-        diariaList,
-        semanalList,
+        user,
       }}
     >
       {children}

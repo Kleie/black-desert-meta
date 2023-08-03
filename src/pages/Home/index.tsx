@@ -38,16 +38,17 @@ import { TimeLeft, WeekLeft } from "../../components/Time";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 
 export function Home() {
-  const { diariaList, semanalList, handleMetaCompleted, handleResetAllMetas } = useMetaContext();
+  const { user, handleMetaCompleted, handleResetAllMetas } = useMetaContext();
 
-  const diariasCompletas = diariaList.filter((diaria) => {
-    if (diaria.isCompleted === true) {
+  // arrumar aqui
+  const diariasCompletas = user.diaries?.filter((diaria) => {
+    if (diaria.isCompleted) {
       return diaria;
     }
   });
 
-  const semanaisCompletas = semanalList.filter((semanal) => {
-    if (semanal.isCompleted === true) {
+  const semanaisCompletas = user.weeklies?.filter((semanal) => {
+    if (semanal.isCompleted) {
       return semanal;
     }
   });
@@ -149,7 +150,7 @@ export function Home() {
             <h2>Diarias</h2>
             <ArrowCounterClockwise onClick={() => handleResetAllMetas("diaria")} />
             <div>
-              <span>{`concluidas ${diariasCompletas.length} de ${diariaList.length}`}</span>
+              <span>{`concluidas ${diariasCompletas?.length} de ${user.diaries?.length}`}</span>
               <TimeLeft />
             </div>
           </TitleDiarias>
@@ -157,13 +158,14 @@ export function Home() {
           <Diarias>
             <DiariasList>
               <CardDiariasWrapper>
-                {diariaList.length > 0 ? (
-                  diariaList.map((diaria) => {
+                {user.diaries?.length > 0 ? (
+                  user.diaries.map((diary) => {
+                    console.log(diary);
                     return (
-                      <MetaCardWrapper iscompleted={diaria.isCompleted}>
-                        <Card padding={1} key={diaria.id} onClick={() => handleMetaCompleted(diaria.id, "diaria")}>
-                          <h3>{diaria.title}</h3>
-                          <p>{diaria.description}</p>
+                      <MetaCardWrapper iscompleted={diary.isCompleted}>
+                        <Card padding={1} key={diary.id} onClick={() => handleMetaCompleted(diary.id, "diaria")}>
+                          <h3>{diary.title}</h3>
+                          <p>{diary.description}</p>
                         </Card>
                       </MetaCardWrapper>
                     );
@@ -181,7 +183,7 @@ export function Home() {
             <h2>Semanais</h2>
             <ArrowCounterClockwise onClick={() => handleResetAllMetas("semanal")} />
             <div>
-              <span>{`concluidas ${semanaisCompletas.length} de ${semanalList.length}`}</span>
+              <span>{`concluidas ${semanaisCompletas?.length} de ${user.weeklies?.length}`}</span>
 
               <WeekLeft />
             </div>
@@ -190,13 +192,14 @@ export function Home() {
           <Semanais>
             <SemanaisList>
               <CardSemanaisWrapper>
-                {semanalList.length > 0 ? (
-                  semanalList.map((semanal) => {
+                {user.weeklies?.length > 0 ? (
+                  user.weeklies.map((weekly) => {
+                    console.log(weekly);
                     return (
-                      <MetaCardWrapper iscompleted={semanal.isCompleted}>
-                        <Card padding={1} key={semanal.id} onClick={() => handleMetaCompleted(semanal.id, "semanal")}>
-                          <h3>{semanal.title}</h3>
-                          <p>{semanal.description}</p>
+                      <MetaCardWrapper iscompleted={weekly.isCompleted}>
+                        <Card padding={1} key={weekly.id} onClick={() => handleMetaCompleted(weekly.id, "semanal")}>
+                          <h3>{weekly.title}</h3>
+                          <p>{weekly.description}</p>
                         </Card>
                       </MetaCardWrapper>
                     );

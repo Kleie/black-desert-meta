@@ -26,7 +26,7 @@ import { Modal } from "../../components/Modal";
 import { useMetaContext } from "../../hooks/useMetaContext";
 
 export function Metas() {
-  const { modalVisibility, handleOpenModal, diariaList, semanalList, MetaListwithoutOne } = useMetaContext();
+  const { modalVisibility, handleOpenModal, user, handleDeleteMeta } = useMetaContext();
 
   return (
     <>
@@ -45,13 +45,13 @@ export function Metas() {
 
           <CardWrapperDiaria>
             <CardDiaria>
-              {diariaList.length > 0 ? (
-                diariaList.map((diaria) => {
+              {user.diaries?.length > 0 ? (
+                user.diaries.map((diaria) => {
                   return (
                     <Card padding={1.5} key={diaria.id}>
                       <TitleCard>
                         <h3>{diaria.title}</h3>
-                        <button onClick={() => MetaListwithoutOne(diaria.id, "diaria")}>
+                        <button onClick={() => handleDeleteMeta(diaria.id, "diaria")}>
                           <Trash size={20} color="#A9543F" />
                         </button>
                       </TitleCard>
@@ -74,13 +74,13 @@ export function Metas() {
 
           <CardWrapperSemanal>
             <CardSemanal>
-              {semanalList.length > 0 ? (
-                semanalList.map((semanal) => {
+              {user.weeklies?.length > 0 ? (
+                user.weeklies.map((semanal) => {
                   return (
                     <Card padding={1.5} key={semanal.id}>
                       <TitleCard>
                         <h3>{semanal.title}</h3>
-                        <button onClick={() => MetaListwithoutOne(semanal.id, "semanal")}>
+                        <button onClick={() => handleDeleteMeta(semanal.id, "semanal")}>
                           <Trash size={20} color="#A9543F" />
                         </button>
                       </TitleCard>
