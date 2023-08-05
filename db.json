@@ -2,9 +2,23 @@
   "users": [
     {
       "id": "1",
-      "username": "Kleie",
+      "username": "Farelo",
       "diaries": [],
-      "weeklies": []
+      "weeklies": [
+        {
+          "id": "ecd95657-0df9-4122-9189-1c34e5a157b2",
+          "title": "a",
+          "description": "a",
+          "isCompleted": true,
+          "createdAt": "2023-08-04T21:33:07.567Z",
+          "resetDay": "2023-08-10T03:00:00.000Z"
+        }
+      ],
+      "diaria": [
+        {
+          "title": "xato"
+        }
+      ]
     }
   ]
 }

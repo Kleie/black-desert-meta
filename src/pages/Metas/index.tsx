@@ -11,8 +11,8 @@ import {
   MetasContainer,
   ModalWrapper,
   SemanalArea,
-  TimeInTitleDiaria,
-  TimeInTitleSemanal,
+  // TimeInTitleDiaria,
+  // TimeInTitleSemanal,
   TitleCard,
   TitleDiaria,
   // TitleMeta,
@@ -40,7 +40,7 @@ export function Metas() {
         <DiariaArea>
           <TitleDiaria>
             Diárias
-            <TimeInTitleDiaria>2h horas restante</TimeInTitleDiaria>
+            {/* <TimeInTitleDiaria>2h horas restante</TimeInTitleDiaria> */}
           </TitleDiaria>
 
           <CardWrapperDiaria>
@@ -69,7 +69,7 @@ export function Metas() {
         <SemanalArea>
           <TitleSemanal>
             Semanais
-            <TimeInTitleSemanal>2h horas restante</TimeInTitleSemanal>
+            {/* <TimeInTitleSemanal>2h horas restante</TimeInTitleSemanal> */}
           </TitleSemanal>
 
           <CardWrapperSemanal>

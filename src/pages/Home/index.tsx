@@ -160,7 +160,6 @@ export function Home() {
               <CardDiariasWrapper>
                 {user.diaries?.length > 0 ? (
                   user.diaries.map((diary) => {
-                    console.log(diary);
                     return (
                       <MetaCardWrapper iscompleted={diary.isCompleted}>
                         <Card padding={1} key={diary.id} onClick={() => handleMetaCompleted(diary.id, "diaria")}>
@@ -194,7 +193,6 @@ export function Home() {
               <CardSemanaisWrapper>
                 {user.weeklies?.length > 0 ? (
                   user.weeklies.map((weekly) => {
-                    console.log(weekly);
                     return (
                       <MetaCardWrapper iscompleted={weekly.isCompleted}>
                         <Card padding={1} key={weekly.id} onClick={() => handleMetaCompleted(weekly.id, "semanal")}>

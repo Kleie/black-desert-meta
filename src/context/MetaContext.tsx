@@ -1,4 +1,5 @@
 import axios from "axios";
+import { addDays, isThursday, startOfDay, startOfWeek } from "date-fns";
 import { createContext, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
@@ -14,6 +15,7 @@ export interface Diary {
   title: string;
   description: string;
   createdAt: string;
+  resetDay: string;
   isCompleted: boolean;
 }
 
@@ -22,6 +24,7 @@ export interface Weekly {
   title: string;
   description: string;
   createdAt: string;
+  resetDay: string;
   isCompleted: boolean;
 }
 
@@ -47,11 +50,98 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       const res = await axios.get("http://localhost:3000/users/1");
       setUser(res.data);
     }
-    getUserData();
+
+    async function fatchData() {
+      await getUserData();
+    }
+    fatchData();
   }, []);
+
+  useEffect(() => {
+    async function handleResetMeta() {
+      await user.diaries.forEach((diary) => {
+        const now = new Date();
+        const resetDayDate = new Date(diary.resetDay);
+        now >= resetDayDate && handleResetDiary(diary.id);
+      });
+
+      await user.weeklies.forEach((weekly) => {
+        const now = new Date();
+        const resetWeekDate = new Date(weekly.resetDay);
+        now >= resetWeekDate && handleResetWeekly(weekly.id);
+      });
+    }
+
+    function handleResetDiary(id: string) {
+      const updatedDiaries = user.diaries.map((diary) => {
+        const timeNow = new Date();
+        const resetDaily = startOfDay(addDays(timeNow, 1));
+
+        if (diary.id === id) {
+          return {
+            ...diary,
+            isCompleted: false,
+            createdAt: timeNow.toISOString(),
+            resetDay: resetDaily.toISOString(),
+          };
+        } else {
+          return diary;
+        }
+      });
+      const newUser = { ...user, diaries: updatedDiaries };
+      axios.patch("http://localhost:3000/users/1", newUser);
+    }
+
+    function handleResetWeekly(id: string) {
+      const updatedWeekly = user.weeklies.map((weekly) => {
+        const timeNow = new Date();
+        let resetWeek = startOfWeek(timeNow, { weekStartsOn: 4 }); // quinta
+
+        if (isThursday(timeNow) && timeNow >= resetWeek) {
+          resetWeek = startOfWeek(addDays(timeNow, 7), { weekStartsOn: 4 });
+        }
+        if (timeNow.getDay() >= 5) {
+          resetWeek = startOfWeek(addDays(timeNow, 6), { weekStartsOn: 4 });
+        }
+
+        if (weekly.id === id) {
+          return {
+            ...weekly,
+            isCompleted: false,
+            createdAt: timeNow.toISOString(),
+            resetDay: resetWeek.toISOString(),
+          };
+        } else {
+          return weekly;
+        }
+      });
+      const newUser = { ...user, weeklies: updatedWeekly };
+      axios.patch("http://localhost:3000/users/1", newUser);
+    }
+
+    handleResetMeta();
+  }, [user]);
 
   function handleCreateMeta(title: string, description: string, type: "diaria" | "semanal") {
     const newUser = { ...user };
+
+    const now = new Date();
+    const resetDay = startOfDay(addDays(now, 1));
+    // let resetWeek = startOfWeek(now, { weekStartsOn: 4 }); // quinta
+
+    // if (isThursday(now) && now >= resetWeek) {
+    //   resetWeek = startOfWeek(addDays(now, 7), { weekStartsOn: 4 });
+    // }
+    // if (now.getDay() >= 5) {
+    //   resetWeek = startOfWeek(addDays(now, 6), { weekStartsOn: 4 });
+    // }
+
+    function getCurrentTimePlusFiveMinutes(): Date {
+      const currentTime = new Date();
+      const fiveMinutesLater = new Date(currentTime.getTime() + 1 * 60 * 1000); // Add 5 minutes in milliseconds
+
+      return fiveMinutesLater;
+    }
 
     if (type === "diaria") {
       newUser.diaries.push({
@@ -59,7 +149,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         title: title,
         description: description,
         isCompleted: false,
-        createdAt: new Date().toISOString(),
+        createdAt: now.toISOString(),
+        resetDay: resetDay.toISOString(),
       });
     }
 
@@ -69,10 +160,12 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         title: title,
         description: description,
         isCompleted: false,
-        createdAt: new Date().toISOString(),
+        createdAt: now.toISOString(),
+        // resetDay: resetWeek.toISOString(),
+        resetDay: getCurrentTimePlusFiveMinutes().toISOString(),
       });
     }
-    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+    axios.patch("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
   }
 
   function handleDeleteMeta(metaId: string, type: "diaria" | "semanal") {
@@ -113,6 +206,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       });
       newUser.weeklies = newWeekly;
     }
+
     axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
   }
 

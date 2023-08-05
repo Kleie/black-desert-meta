@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addDays, startOfWeek, startOfDay, formatDistance } from "date-fns";
+import { addDays, startOfWeek, startOfDay, formatDistance, isThursday, formatDistanceStrict } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export function TimeLeft() {
@@ -9,7 +9,7 @@ export function TimeLeft() {
     const agora = new Date();
     const proximoReset = startOfDay(addDays(agora, 1)); // Calcula o próximo reset diário (amanhã à meia-noite)
     const distancia = formatDistance(agora, proximoReset, {
-      // addSuffix: true,
+      addSuffix: true,
       locale: ptBR,
     });
     return distancia;
@@ -35,42 +35,27 @@ export function WeekLeft() {
   const [tempoRestante, setTempoRestante] = useState("");
 
   function calcularTempoRestante(): string {
-    const agora = new Date();
-    const proximaQuinta = startOfWeek(agora, { weekStartsOn: 4 }); // Calcula a próxima quinta-feira
-    const distancia = formatDistance(new Date(agora), new Date(proximaQuinta), {
-      addSuffix: true,
-      locale: ptBR,
-    });
-    return distancia;
-  }
+    const hoje = new Date();
+    let proximaQuinta = startOfWeek(hoje, { weekStartsOn: 4 });
 
-  useEffect(() => {
-    function atualizarTempoRestante() {
-      const tempoRestanteAtualizado = calcularTempoRestante();
-      setTempoRestante(tempoRestanteAtualizado);
+    // Se hoje é quinta-feira e já passou do horário da próxima quinta-feira, ajusta para a próxima semana
+    if (isThursday(hoje) && hoje >= proximaQuinta) {
+      proximaQuinta = startOfWeek(addDays(hoje, 7), { weekStartsOn: 4 });
     }
 
-    atualizarTempoRestante(); // Atualiza o tempo restante imediatamente após o componente ser montado
+    // Se hoje for sexta-feira ou depois, calcula a distância até a próxima quinta-feira
+    if (hoje.getDay() >= 5) {
+      proximaQuinta = startOfWeek(addDays(hoje, 6), { weekStartsOn: 4 });
+    }
 
-    const intervalId = setInterval(atualizarTempoRestante, 3600000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  return <span>{tempoRestante}</span>;
-}
-
-export function TerraDoAmanhecer() {
-  const [tempoRestante, setTempoRestante] = useState("");
-
-  function calcularTempoRestante(): string {
-    const agora = new Date();
-    const proximoSabado = startOfWeek(agora, { weekStartsOn: 6 }); // Calcula o próximo sábado
-    const distance = formatDistance(new Date(agora), new Date(proximoSabado), {
+    const distancia = formatDistanceStrict(new Date(), proximaQuinta, {
       // addSuffix: true,
+      unit: "day",
+      roundingMethod: "ceil",
       locale: ptBR,
     });
-    return distance;
+
+    return distancia;
   }
 
   useEffect(() => {
