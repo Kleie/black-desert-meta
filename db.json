@@ -3,14 +3,23 @@
     {
       "id": "1",
       "username": "Farelo",
-      "diaries": [],
-      "weeklies": [
+      "diaries": [
         {
-          "id": "ecd95657-0df9-4122-9189-1c34e5a157b2",
+          "id": "99a4b4f3-2703-414e-81fa-5aeace5bd915",
           "title": "a",
           "description": "a",
           "isCompleted": true,
-          "createdAt": "2023-08-04T21:33:07.567Z",
+          "createdAt": "2023-08-08T16:07:00.726Z",
+          "resetDay": "2023-08-09T03:00:00.000Z"
+        }
+      ],
+      "weeklies": [
+        {
+          "id": "4d5c921a-901f-444e-a40a-427737c19d39",
+          "title": "a",
+          "description": "a",
+          "isCompleted": true,
+          "createdAt": "2023-08-06T20:19:49.933Z",
           "resetDay": "2023-08-10T03:00:00.000Z"
         }
       ],

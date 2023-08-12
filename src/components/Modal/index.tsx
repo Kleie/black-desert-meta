@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  ButtonWhitoutContent,
-  ButtonWithContent,
+  Button,
   DescriptionModal,
   FooterModal,
+  Loading,
   ModalContainer,
   ModalWrapper,
   SelectMeta,
@@ -12,13 +12,14 @@ import {
 import { useMetaContext } from "../../hooks/useMetaContext";
 
 export function Modal() {
-  const [radio, setRadio] = useState<"diaria" | "semanal">("diaria");
+  const [radio, setRadio] = useState<"diary" | "weekly">("diary");
   const [titleInput, setTitleInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
 
-  const { handleCloseModal, handleCreateMeta } = useMetaContext();
+  const { handleCloseModal, handleCreateDiary, handleCreateWeekly, createDiaryLoading, createWeeklyLoading } =
+    useMetaContext();
 
-  function handleSelectRadio(targetRadio: "diaria" | "semanal") {
+  function handleSelectRadio(targetRadio: "diary" | "weekly") {
     setRadio(targetRadio);
   }
 
@@ -31,7 +32,9 @@ export function Modal() {
   }
 
   function onCreateNewMeta() {
-    handleCreateMeta(titleInput, descriptionInput, radio);
+    radio === "diary" && handleCreateDiary(titleInput, descriptionInput);
+    radio === "weekly" && handleCreateWeekly(titleInput, descriptionInput);
+
     setTitleInput("");
     setDescriptionInput("");
   }
@@ -55,27 +58,28 @@ export function Modal() {
           <label>Meta</label>
           <div>
             <div>
-              <input type="radio" readOnly name="meta" value="diaria" checked={radio === "diaria"} />
-              <label htmlFor="diaria" onClick={() => handleSelectRadio("diaria")}>
+              <input type="radio" readOnly name="meta" value="diaria" checked={radio === "diary"} />
+              <label htmlFor="diaria" onClick={() => handleSelectRadio("diary")}>
                 Diaria
               </label>
             </div>
             <div>
-              <input type="radio" readOnly name="meta" value="semanal" checked={radio === "semanal"} />
-              <label htmlFor="semanal" onClick={() => handleSelectRadio("semanal")}>
+              <input type="radio" readOnly name="meta" value="semanal" checked={radio === "weekly"} />
+              <label htmlFor="semanal" onClick={() => handleSelectRadio("weekly")}>
                 Semanal
               </label>
             </div>
           </div>
         </SelectMeta>
         <FooterModal>
-          {/* <button onClick={onCreateNewMeta}>Adicionar</button> */}
-
-          {titleInput.length > 0 && descriptionInput.length > 0 ? (
-            <ButtonWithContent onClick={onCreateNewMeta}>Adicionar</ButtonWithContent>
+          {createDiaryLoading || createWeeklyLoading ? (
+            <Loading />
           ) : (
-            <ButtonWhitoutContent>Adicionar</ButtonWhitoutContent>
+            <Button onClick={onCreateNewMeta} disabled={titleInput.length <= 0 && descriptionInput.length <= 0}>
+              Adicionar
+            </Button>
           )}
+
           <button onClick={handleCloseModal}>Cancelar</button>
         </FooterModal>
       </ModalWrapper>

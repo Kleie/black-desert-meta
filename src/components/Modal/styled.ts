@@ -120,20 +120,36 @@ export const FooterModal = styled.div`
   }
 `;
 
-export const ButtonWithContent = styled.button`
+export const Button = styled.button`
   border: 0;
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
   background: ${(props) => props.theme["brown-500"]};
-  color: white;
+  color: ${(props) => props.theme.white};
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
-export const ButtonWhitoutContent = styled.button`
-  cursor: not-allowed;
-  color: ${(props) => props.theme.white};
-  border: 0;
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  background: ${(props) => props.theme["brown-500"]};
+export const Loading = styled.button`
+  content: "";
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  background: none;
+  width: 30px;
+  height: 30px;
+  margin: 2px 31px;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;

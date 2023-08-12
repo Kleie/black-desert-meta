@@ -7,6 +7,7 @@ import {
   // CardWrapperMeta,
   CardWrapperSemanal,
   DiariaArea,
+  Loading,
   // MetasArea,
   MetasContainer,
   ModalWrapper,
@@ -26,7 +27,19 @@ import { Modal } from "../../components/Modal";
 import { useMetaContext } from "../../hooks/useMetaContext";
 
 export function Metas() {
-  const { modalVisibility, handleOpenModal, user, handleDeleteMeta } = useMetaContext();
+  const {
+    user,
+    modalVisibility,
+    handleOpenModal,
+    handleDeleteDiary,
+    handleDeleteWeekly,
+    deleteDiaryLoading,
+    deleteWeeklyLoading,
+  } = useMetaContext();
+  if (!user?.id) {
+    return <p>Error no user</p>;
+  }
+  console.log(user?.diaries);
 
   return (
     <>
@@ -38,24 +51,25 @@ export function Metas() {
 
       <MetasContainer>
         <DiariaArea>
-          <TitleDiaria>
-            Diárias
-            {/* <TimeInTitleDiaria>2h horas restante</TimeInTitleDiaria> */}
-          </TitleDiaria>
+          <TitleDiaria>Diárias</TitleDiaria>
 
           <CardWrapperDiaria>
             <CardDiaria>
-              {user.diaries?.length > 0 ? (
-                user.diaries.map((diaria) => {
+              {user.diaries.length > 0 ? (
+                user.diaries.map((diary) => {
                   return (
-                    <Card padding={1.5} key={diaria.id}>
+                    <Card padding={1.5} key={diary.id}>
                       <TitleCard>
-                        <h3>{diaria.title}</h3>
-                        <button onClick={() => handleDeleteMeta(diaria.id, "diaria")}>
-                          <Trash size={20} color="#A9543F" />
-                        </button>
+                        <h3>{diary.title}</h3>
+                        {deleteDiaryLoading ? (
+                          <Loading />
+                        ) : (
+                          <button onClick={() => handleDeleteDiary(diary.id)} disabled={deleteDiaryLoading}>
+                            <Trash size={20} color="#A9543F" />
+                          </button>
+                        )}
                       </TitleCard>
-                      <p>{diaria.description}</p>
+                      <p>{diary.description}</p>
                     </Card>
                   );
                 })
@@ -67,24 +81,25 @@ export function Metas() {
         </DiariaArea>
 
         <SemanalArea>
-          <TitleSemanal>
-            Semanais
-            {/* <TimeInTitleSemanal>2h horas restante</TimeInTitleSemanal> */}
-          </TitleSemanal>
+          <TitleSemanal>Semanais</TitleSemanal>
 
           <CardWrapperSemanal>
             <CardSemanal>
-              {user.weeklies?.length > 0 ? (
-                user.weeklies.map((semanal) => {
+              {user.weeklies.length > 0 ? (
+                user.weeklies.map((weekly) => {
                   return (
-                    <Card padding={1.5} key={semanal.id}>
+                    <Card padding={1.5} key={weekly.id}>
                       <TitleCard>
-                        <h3>{semanal.title}</h3>
-                        <button onClick={() => handleDeleteMeta(semanal.id, "semanal")}>
-                          <Trash size={20} color="#A9543F" />
-                        </button>
+                        <h3>{weekly.title}</h3>
+                        {deleteWeeklyLoading ? (
+                          <Loading />
+                        ) : (
+                          <button onClick={() => handleDeleteWeekly(weekly.id)} disabled={deleteDiaryLoading}>
+                            <Trash size={20} color="#A9543F" />
+                          </button>
+                        )}
                       </TitleCard>
-                      <p>{semanal.description}</p>
+                      <p>{weekly.description}</p>
                     </Card>
                   );
                 })

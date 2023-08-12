@@ -1,232 +1,175 @@
-import axios from "axios";
-import { addDays, isThursday, startOfDay, startOfWeek } from "date-fns";
+import { addDays, startOfDay } from "date-fns";
 import { createContext, useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
-
-export interface User {
-  id: string;
-  username: string;
-  diaries: Diary[];
-  weeklies: Weekly[];
-}
-
-export interface Diary {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  resetDay: string;
-  isCompleted: boolean;
-}
-
-export interface Weekly {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  resetDay: string;
-  isCompleted: boolean;
-}
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_USER } from "../data/querys";
+import { CREATE_DIARY, CREATE_WEEKLY, DELETE_DIARY, DELETE_WEEKLY, UPDATE_META_IS_COMPLETED } from "../data/mutations";
 
 interface ContextProps {
   modalVisibility: boolean;
   handleOpenModal: () => void;
   handleCloseModal: () => void;
-  handleCreateMeta: (title: string, description: string, type: "diaria" | "semanal") => void;
-  handleDeleteMeta: (metaId: string, type: "diaria" | "semanal") => void;
-  handleMetaCompleted: (id: string, type: "diaria" | "semanal") => void;
-  handleResetAllMetas: (type: "diaria" | "semanal") => void;
+  handleCreateDiary: (title: string, description: string) => void;
+  handleCreateWeekly: (title: string, description: string) => void;
+  handleDeleteDiary: (metaId: string) => void;
+  handleDeleteWeekly: (metaId: string) => void;
+  handleMetaCompleted: (id: string, type: "diary" | "weekly") => void;
+  user?: User;
+  loading: boolean;
+  createDiaryLoading: boolean;
+  createWeeklyLoading: boolean;
+  deleteDiaryLoading: boolean;
+  deleteWeeklyLoading: boolean;
+}
+
+export interface GetUserResponse {
   user: User;
+}
+
+export interface CreateDiaryResponse {
+  createDiary: Diary;
+}
+
+export interface CreateWeeklyResponse {
+  createWeekly: Weekly;
+}
+
+export interface User {
+  __typename: string;
+  id: string;
+  discord_id: string;
+  username: string;
+  avatar: string;
+  diaries: Diary[];
+  weeklies: Weekly[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Diary {
+  __typename: string;
+  id: string;
+  userId: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  resetDay: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Weekly {
+  __typename: string;
+  id: string;
+  userId: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  resetDay: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NewDiary {
+  id: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  resetDay: string;
+  createdAt: string;
+}
+
+export interface NewWeekly {
+  id: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  resetDay: string;
+  createdAt: string;
 }
 
 export const Context = createContext({} as ContextProps);
 
 export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState({} as User);
+
+  const { data, loading, error } = useQuery<GetUserResponse>(GET_USER, {
+    variables: { userId: "2" },
+  });
+
+  const [createDiary, { loading: createDiaryLoading }] = useMutation<CreateDiaryResponse>(CREATE_DIARY);
+  const [createWeekly, { loading: createWeeklyLoading }] = useMutation<CreateWeeklyResponse>(CREATE_WEEKLY);
+  const [updateMetaIsCompleted] = useMutation<User>(UPDATE_META_IS_COMPLETED);
+  const [deleteDiary, { loading: deleteDiaryLoading }] = useMutation(DELETE_DIARY);
+  const [deleteWeekly, { loading: deleteWeeklyLoading }] = useMutation(DELETE_WEEKLY);
+
   const [modalVisibility, setModalVisibility] = useState(false);
 
   useEffect(() => {
-    async function getUserData() {
-      const res = await axios.get("http://localhost:3000/users/1");
-      setUser(res.data);
+    if (!loading && !error && data) {
+      setUser(data.user);
     }
+  }, [data, loading, error]);
 
-    async function fatchData() {
-      await getUserData();
-    }
-    fatchData();
-  }, []);
-
-  useEffect(() => {
-    async function handleResetMeta() {
-      await user.diaries.forEach((diary) => {
-        const now = new Date();
-        const resetDayDate = new Date(diary.resetDay);
-        now >= resetDayDate && handleResetDiary(diary.id);
-      });
-
-      await user.weeklies.forEach((weekly) => {
-        const now = new Date();
-        const resetWeekDate = new Date(weekly.resetDay);
-        now >= resetWeekDate && handleResetWeekly(weekly.id);
-      });
-    }
-
-    function handleResetDiary(id: string) {
-      const updatedDiaries = user.diaries.map((diary) => {
-        const timeNow = new Date();
-        const resetDaily = startOfDay(addDays(timeNow, 1));
-
-        if (diary.id === id) {
-          return {
-            ...diary,
-            isCompleted: false,
-            createdAt: timeNow.toISOString(),
-            resetDay: resetDaily.toISOString(),
-          };
-        } else {
-          return diary;
-        }
-      });
-      const newUser = { ...user, diaries: updatedDiaries };
-      axios.patch("http://localhost:3000/users/1", newUser);
-    }
-
-    function handleResetWeekly(id: string) {
-      const updatedWeekly = user.weeklies.map((weekly) => {
-        const timeNow = new Date();
-        let resetWeek = startOfWeek(timeNow, { weekStartsOn: 4 }); // quinta
-
-        if (isThursday(timeNow) && timeNow >= resetWeek) {
-          resetWeek = startOfWeek(addDays(timeNow, 7), { weekStartsOn: 4 });
-        }
-        if (timeNow.getDay() >= 5) {
-          resetWeek = startOfWeek(addDays(timeNow, 6), { weekStartsOn: 4 });
-        }
-
-        if (weekly.id === id) {
-          return {
-            ...weekly,
-            isCompleted: false,
-            createdAt: timeNow.toISOString(),
-            resetDay: resetWeek.toISOString(),
-          };
-        } else {
-          return weekly;
-        }
-      });
-      const newUser = { ...user, weeklies: updatedWeekly };
-      axios.patch("http://localhost:3000/users/1", newUser);
-    }
-
-    handleResetMeta();
-  }, [user]);
-
-  function handleCreateMeta(title: string, description: string, type: "diaria" | "semanal") {
-    const newUser = { ...user };
-
+  async function handleCreateDiary(title: string, description: string) {
     const now = new Date();
     const resetDay = startOfDay(addDays(now, 1));
-    // let resetWeek = startOfWeek(now, { weekStartsOn: 4 }); // quinta
 
-    // if (isThursday(now) && now >= resetWeek) {
-    //   resetWeek = startOfWeek(addDays(now, 7), { weekStartsOn: 4 });
-    // }
-    // if (now.getDay() >= 5) {
-    //   resetWeek = startOfWeek(addDays(now, 6), { weekStartsOn: 4 });
-    // }
-
-    function getCurrentTimePlusFiveMinutes(): Date {
-      const currentTime = new Date();
-      const fiveMinutesLater = new Date(currentTime.getTime() + 1 * 60 * 1000); // Add 5 minutes in milliseconds
-
-      return fiveMinutesLater;
-    }
-
-    if (type === "diaria") {
-      newUser.diaries.push({
-        id: uuid(),
-        title: title,
-        description: description,
-        isCompleted: false,
-        createdAt: now.toISOString(),
-        resetDay: resetDay.toISOString(),
-      });
-    }
-
-    if (type === "semanal") {
-      newUser.weeklies.push({
-        id: uuid(),
-        title: title,
-        description: description,
-        isCompleted: false,
-        createdAt: now.toISOString(),
-        // resetDay: resetWeek.toISOString(),
-        resetDay: getCurrentTimePlusFiveMinutes().toISOString(),
-      });
-    }
-    axios.patch("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+    const newDiary = {
+      title: title,
+      description: description,
+      resetDay: resetDay.toISOString(),
+    };
+    const { data } = await createDiary({ variables: { userId: user?.id, newDiary: newDiary } });
+    data && setUser((prevState) => ({ ...prevState, diaries: [...prevState.diaries, data.createDiary] }));
   }
 
-  function handleDeleteMeta(metaId: string, type: "diaria" | "semanal") {
-    const newUser = { ...user };
+  async function handleCreateWeekly(title: string, description: string) {
+    function resetWeek() {
+      const now = new Date();
+      const dayOfWeek = now.getDay(); // Dia da semana atual (0 = domingo, 1 = segunda, ..., 6 = sábado)
 
-    if (type === "diaria") {
-      const newDiary = newUser.diaries.filter((diary) => metaId !== diary.id);
-      newUser.diaries = newDiary;
-    }
-    if (type === "semanal") {
-      const newWeekly = newUser.weeklies.filter((weekly) => metaId !== weekly.id);
-      newUser.weeklies = newWeekly;
+      // Calcula a diferença de dias entre o dia atual e a próxima quinta-feira (4).
+      const daysUntilNextThursday = (4 - dayOfWeek + 7) % 7;
+
+      // Adiciona a diferença de dias para obter a próxima quinta-feira.
+      const resetWeek = addDays(now, daysUntilNextThursday);
+
+      return startOfDay(resetWeek);
     }
 
-    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+    const newWeekly = {
+      title: title,
+      description: description,
+      resetDay: resetWeek().toISOString(),
+    };
+    const { data } = await createWeekly({ variables: { userId: user?.id, newWeekly: newWeekly } });
+    data && setUser((prevState) => ({ ...prevState, weeklies: [...prevState.weeklies, data.createWeekly] }));
   }
 
-  function handleMetaCompleted(id: string, type: "diaria" | "semanal") {
-    const newUser = { ...user };
-
-    if (type === "diaria") {
-      const newDiary = newUser.diaries.map((diary) => {
-        if (diary.id === id) {
-          diary.isCompleted = !diary.isCompleted;
-          return diary;
-        }
+  async function handleDeleteDiary(metaId: string) {
+    const diariesWhithoutOne = user.diaries.filter((diary) => {
+      if (diary.id !== metaId) {
         return diary;
-      });
-      newUser.diaries = newDiary;
-    }
-    if (type === "semanal") {
-      const newWeekly = newUser.weeklies.map((weekly) => {
-        if (weekly.id === id) {
-          weekly.isCompleted = !weekly.isCompleted;
-          return weekly;
-        }
-        return weekly;
-      });
-      newUser.weeklies = newWeekly;
-    }
-
-    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+      }
+    });
+    await deleteDiary({ variables: { id: metaId } });
+    setUser((prevState) => ({ ...prevState, diaries: diariesWhithoutOne }));
   }
 
-  function handleResetAllMetas(type: "diaria" | "semanal") {
-    const newUser = { ...user };
-    if (type === "diaria") {
-      const newDiary = newUser.diaries.map((diary) => {
-        diary.isCompleted = !diary.isCompleted;
-        return diary;
-      });
-      newUser.diaries = newDiary;
-    }
-    if (type === "semanal") {
-      const newWeekly = newUser.weeklies.map((weekly) => {
-        weekly.isCompleted = !weekly.isCompleted;
-        return weekly;
-      });
-      newUser.weeklies = newWeekly;
-    }
-    axios.put("http://localhost:3000/users/1", newUser).then(({ data }) => setUser(data));
+  async function handleDeleteWeekly(metaId: string) {
+    const weekliesWhithoutOne = user.weeklies.filter((weeklie) => {
+      if (weeklie.id !== metaId) {
+        return weeklie;
+      }
+    });
+    await deleteWeekly({ variables: { id: metaId } });
+    setUser((prevState) => ({ ...prevState, weeklies: weekliesWhithoutOne }));
+  }
+
+  function handleMetaCompleted(id: string, type: "diary" | "weekly") {
+    updateMetaIsCompleted({
+      variables: { id: id, metaType: type },
+    });
   }
 
   function handleOpenModal() {
@@ -243,11 +186,17 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         modalVisibility,
         handleOpenModal,
         handleCloseModal,
-        handleCreateMeta,
-        handleDeleteMeta,
+        handleCreateDiary,
+        handleCreateWeekly,
+        handleDeleteDiary,
+        handleDeleteWeekly,
         handleMetaCompleted,
-        handleResetAllMetas,
         user,
+        loading,
+        createDiaryLoading,
+        createWeeklyLoading,
+        deleteDiaryLoading,
+        deleteWeeklyLoading,
       }}
     >
       {children}

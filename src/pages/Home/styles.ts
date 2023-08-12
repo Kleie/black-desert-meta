@@ -192,10 +192,6 @@ export const TitleDiarias = styled.div`
     font-size: 0.75rem;
     color: ${(props) => props.theme["gray-100"]};
   }
-
-  & > :nth-child(2) {
-    cursor: pointer;
-  }
 `;
 
 export const Diarias = styled.div``;
@@ -321,23 +317,4 @@ export const CardSemanaisWrapper = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-`;
-
-interface MetaCardProps {
-  iscompleted: boolean;
-}
-
-export const MetaCardWrapper = styled.div<MetaCardProps>`
-  max-height: ${(props) => (props.iscompleted ? "0" : "1000px")};
-  opacity: ${(props) => (props.iscompleted ? "0" : "1")};
-  cursor: ${(props) => (props.iscompleted ? "default" : "pointer")};
-  overflow: hidden;
-  transition: 0.5s;
-  text-decoration: none;
-  ${(props) =>
-    props.iscompleted
-      ? css`
-          text-decoration: line-through;
-        `
-      : ""}
 `;

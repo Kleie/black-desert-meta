@@ -3,10 +3,12 @@ import { Home } from "./pages/Home";
 import { Metas } from "./pages/Metas";
 import { GrindTraker } from "./pages/GrindTraker";
 import { DefaultLayout } from "./layouts/DefaultLayout";
+import { Login } from "./pages/Login";
 
 export function Router() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<Navigate to="home" replace />} />
         <Route path="/home" element={<Home />} />
