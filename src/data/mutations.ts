@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_DIARY = gql`
-  mutation Mutation($userId: String!, $newDiary: CreateDiaryInput!) {
-    createDiary(userId: $userId, newDiary: $newDiary) {
+  mutation Mutation($newDiary: CreateDiaryInput!) {
+    createDiary(newDiary: $newDiary) {
       id
       userId
       title
@@ -15,8 +15,8 @@ export const CREATE_DIARY = gql`
 `;
 
 export const CREATE_WEEKLY = gql`
-  mutation Mutation($userId: String!, $newWeekly: CreateWeeklyInput!) {
-    createWeekly(userId: $userId, newWeekly: $newWeekly) {
+  mutation Mutation($newWeekly: CreateWeeklyInput!) {
+    createWeekly(newWeekly: $newWeekly) {
       id
       userId
       title

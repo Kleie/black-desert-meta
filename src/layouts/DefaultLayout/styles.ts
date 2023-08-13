@@ -6,10 +6,10 @@ export const Container = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  flex:1 1 0%;
-  margin-top:0.75rem;
+  flex: 1 1 0%;
+  margin-top: 0.75rem;
 
-  display:flex;
+  display: flex;
   flex-direction: column;
 
   padding: 3rem 2rem;
@@ -21,6 +21,10 @@ export const ContentWrapper = styled.div`
     margin-bottom: 1.68rem;
     padding: 0.68rem 1.5rem;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     > h1 {
       text-transform: capitalize;
       font-size: 2rem;
@@ -28,10 +32,29 @@ export const ContentWrapper = styled.div`
   }
 
   main {
-    flex:1 1 0%;
+    flex: 1 1 0%;
     display: flex;
     flex-direction: column;
     gap: 1.68rem;
     padding: 1rem 1.5rem;
+  }
+`;
+
+export const AvatarWrapper = styled.div`
+  width: 4rem;
+  height: 4rem;
+
+  border-radius: 999px;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  outline: 2px solid ${(props) => props.theme["gray"]};
+  border: 4px solid transparent;
+
+  & > img {
+    width: 100%;
   }
 `;

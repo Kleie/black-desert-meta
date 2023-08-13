@@ -3,6 +3,8 @@ import { createContext, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER } from "../data/querys";
 import { CREATE_DIARY, CREATE_WEEKLY, DELETE_DIARY, DELETE_WEEKLY, UPDATE_META_IS_COMPLETED } from "../data/mutations";
+import { redirect, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 interface ContextProps {
   modalVisibility: boolean;
@@ -13,6 +15,7 @@ interface ContextProps {
   handleDeleteDiary: (metaId: string) => void;
   handleDeleteWeekly: (metaId: string) => void;
   handleMetaCompleted: (id: string, type: "diary" | "weekly") => void;
+  handleLogout: () => void;
   user?: User;
   loading: boolean;
   createDiaryLoading: boolean;
@@ -91,10 +94,9 @@ export const Context = createContext({} as ContextProps);
 
 export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState({} as User);
+  const [modalVisibility, setModalVisibility] = useState(false);
 
-  const { data, loading, error } = useQuery<GetUserResponse>(GET_USER, {
-    variables: { userId: "2" },
-  });
+  const { data, loading, error } = useQuery<GetUserResponse>(GET_USER);
 
   const [createDiary, { loading: createDiaryLoading }] = useMutation<CreateDiaryResponse>(CREATE_DIARY);
   const [createWeekly, { loading: createWeeklyLoading }] = useMutation<CreateWeeklyResponse>(CREATE_WEEKLY);
@@ -102,9 +104,14 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [deleteDiary, { loading: deleteDiaryLoading }] = useMutation(DELETE_DIARY);
   const [deleteWeekly, { loading: deleteWeeklyLoading }] = useMutation(DELETE_WEEKLY);
 
-  const [modalVisibility, setModalVisibility] = useState(false);
+  const navigate = useNavigate();
+  const [, , removeCookie] = useCookies(["token"]);
 
   useEffect(() => {
+    if (error) {
+      redirect("/login");
+    }
+
     if (!loading && !error && data) {
       setUser(data.user);
     }
@@ -120,6 +127,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       resetDay: resetDay.toISOString(),
     };
     const { data } = await createDiary({ variables: { userId: user?.id, newDiary: newDiary } });
+    data && console.log("CRIEI ISSO AQUI Ó: ", data);
     data && setUser((prevState) => ({ ...prevState, diaries: [...prevState.diaries, data.createDiary] }));
   }
 
@@ -166,6 +174,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     setUser((prevState) => ({ ...prevState, weeklies: weekliesWhithoutOne }));
   }
 
+  function handleLogout() {
+    removeCookie("token");
+    navigate("/login");
+  }
+
   function handleMetaCompleted(id: string, type: "diary" | "weekly") {
     updateMetaIsCompleted({
       variables: { id: id, metaType: type },
@@ -191,6 +204,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         handleDeleteDiary,
         handleDeleteWeekly,
         handleMetaCompleted,
+        handleLogout,
         user,
         loading,
         createDiaryLoading,

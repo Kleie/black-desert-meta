@@ -36,10 +36,10 @@ export function Metas() {
     deleteDiaryLoading,
     deleteWeeklyLoading,
   } = useMetaContext();
+
   if (!user?.id) {
     return <p>Error no user</p>;
   }
-  console.log(user?.diaries);
 
   return (
     <>

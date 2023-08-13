@@ -1,12 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { Navigation } from "./styles";
+import { LogoutButton, Navigation } from "./styles";
 
-import { DeviceTabletSpeaker, Crosshair, Gear } from "@phosphor-icons/react";
+import { DeviceTabletSpeaker, Crosshair, Gear, SignOut } from "@phosphor-icons/react";
 import logo from "../../assets/logo.svg";
+import { useMetaContext } from "../../hooks/useMetaContext";
 
 export function Nav() {
   const { pathname } = useLocation();
+  const { handleLogout } = useMetaContext();
 
   function handleSelectedPathname(target: string) {
     return pathname === target ? "active" : "disable";
@@ -29,15 +31,15 @@ export function Nav() {
           </Link>
         </li>
         <li>
-          <Link
-            className={handleSelectedPathname("/grind-traker")}
-            to="/grind-traker"
-          >
+          <Link className={handleSelectedPathname("/grind-traker")} to="/grind-traker">
             <Gear className="icon" size={20} weight="fill" />
             GrindTraker
           </Link>
         </li>
       </ul>
+      <LogoutButton onClick={handleLogout}>
+        <SignOut size={24} weight="fill" />
+      </LogoutButton>
     </Navigation>
   );
 }

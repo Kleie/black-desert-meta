@@ -4,16 +4,12 @@ export const Navigation = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding: 3.2rem 0;
   gap: 2rem;
 
   .active {
     color: ${(props) => props.theme.white};
-  }
-  .disable {
-  }
-
-  img {
-    margin-top: 3.1rem;
   }
 
   ul {
@@ -39,5 +35,25 @@ export const Navigation = styled.nav`
 
   a > .icon {
     color: inherit;
+  }
+`;
+
+export const LogoutButton = styled.button`
+  border: none;
+  color: #fff;
+  background: ${(props) => props.theme["black-300"]};
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #3b4046;
   }
 `;

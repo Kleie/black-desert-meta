@@ -8,15 +8,18 @@ import { BrowserRouter } from "react-router-dom";
 import { Router } from "./Router";
 
 import { client } from "./data/apollo";
+import { ContextProvider } from "./context/MetaContext";
 
 function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
-          <Router />
+          <ContextProvider>
+            <Router />
+          </ContextProvider>
         </BrowserRouter>
-
+        
         <GlobalStyle />
       </ThemeProvider>
     </ApolloProvider>
