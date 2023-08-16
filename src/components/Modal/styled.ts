@@ -33,14 +33,18 @@ to {
 `;
 
 export const ModalContainer = styled.div`
-  background: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+`;
 
+export const ModalBackGround = styled.div`
+  height: 100%;
+  width: 100%;
   animation: ${fadeIn} 1s ease;
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 export const ModalWrapper = styled.div`
@@ -167,6 +171,7 @@ export const Button = styled.button`
 
   &:disabled {
     cursor: not-allowed;
+    opacity: 0.3;
   }
 `;
 

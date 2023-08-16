@@ -8,6 +8,7 @@ import {
   LevelModal,
   Loading,
   MetaModal,
+  ModalBackGround,
   ModalContainer,
   ModalWrapper,
   SelectMeta,
@@ -52,6 +53,7 @@ export function Modal() {
   }
   return (
     <ModalContainer>
+      <ModalBackGround onClick={handleCloseModal} />
       <ModalWrapper>
         <SelectMeta>
           <label>Meta</label>
