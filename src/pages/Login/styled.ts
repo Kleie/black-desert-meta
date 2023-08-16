@@ -1,69 +1,83 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
+const leftToRight = keyframes`
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 `;
 
-export const LoginWrapper = styled.div`
+export const Container = styled.div`
+  background-image: url("/src/assets/shai-background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
+export const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: fit-content;
+  justify-content: center;
+  width: fit-content;
+  height: 100vh;
 
-  padding: 3rem 4.71rem;
-  border-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
 
   background: ${(props) => props.theme["black-300"]};
 
+  animation: ${leftToRight} 1s ease-in-out;
+`;
+
+export const LogoWrraper = styled.div`
+  display: flex;
+  position: absolute;
+  gap: 1.54rem;
+  top: 5rem;
+  left: 7rem;
+
+  img {
+    width: 58px;
+    height: 58px;
+  }
+
   h1 {
+    font-size: 2.25rem;
     font-weight: bold;
-    font-size: 3.25rem;
-    padding-top: 1.375rem;
+  }
+`;
+
+export const DiscordWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.31rem;
+
+  max-width: 19.75rem;
+  margin: 0 10.75rem 0 7rem;
+
+  h2 {
+    font-size: 2.25rem;
+  }
+
+  p {
+    color: ${(props) => props.theme["gray-200"]};
   }
 
   a {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
+    justify-content: center;
+    gap: 0.84rem;
+    padding: 0.75rem 6.4375rem;
 
-    margin-top: 4.93rem;
-
-    padding: 0.75rem 5.625rem;
     border-radius: 6px;
-    border: none;
-
-    background: ${(props) => props.theme.blue};
-    color: ${(props) => props.theme.white};
-
-    cursor: pointer;
-
     font-weight: bold;
-    letter-spacing: 1px;
-
-    transition: 1s;
-    &:hover {
-      background: #2e3eef;
-    }
-  }
-`;
-
-export const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: ${(props) => props.theme["black-500"]};
-  padding: 2.08rem;
-  border-radius: 999px;
-  width: 7rem;
-  height: 7rem;
-
-  img {
-    width: 44.24px;
-    height: 45.8px;
+    color: ${(props) => props.theme.white};
+    background: ${(props) => props.theme.blue};
   }
 `;

@@ -1,36 +1,36 @@
 import { Card } from "../../components/UI/Card";
 import {
   CardDiariasWrapper,
-  // CardGrindTrackerContainer,
-  // CardListContainer,
+  CardGrindTrackerContainer,
+  CardListContainer,
   CardSemanaisWrapper,
-  // CardWrapper,
-  // CardWrapperGrindTracker,
-  // CardWrapperMetaAtual,
+  CardWrapper,
+  CardWrapperGrindTracker,
+  CardWrapperMetaAtual,
   Diarias,
   DiariasContainer,
   DiariasList,
   DiariasSemanaisContainer,
-  // GrindTrackerContainer,
+  GrindTrackerContainer,
   HomeContainer,
   MetaAndTrackerContainer,
   MetaAtualContainer,
   MetaContainer,
   ProgressBar,
-  // ProximaMetaContainer,
-  // ProximaMetaList,
+  ProximaMetaContainer,
+  ProximaMetaList,
   Semanais,
   SemanaisContainer,
   SemanaisList,
   TitleDiarias,
-  // TitleGrindTracker,
+  TitleGrindTracker,
   TitleMetaAtual,
-  // TitleProximaMeta,
+  TitleProximaMeta,
   TitleSemanais,
 } from "./styles";
 
-// import itemTeste from "../../assets/Item-test.svg.svg";
-// import gyfinTeste from "../../assets/gyfin-teste.svg";
+import itemTeste from "../../assets/Item-test.svg.svg";
+import gyfinTeste from "../../assets/gyfin-teste.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
 import { TimeLeft, WeekLeft } from "../../components/Time";
@@ -68,7 +68,7 @@ export function Home() {
             </TitleMetaAtual>
             {/* barra de progresso aqui */}
             <ProgressBar></ProgressBar>
-            {/* <CardWrapperMetaAtual>
+            <CardWrapperMetaAtual>
               <Card padding={0.5}>
                 <img src={itemTeste} alt="" />
                 <div>
@@ -76,10 +76,10 @@ export function Home() {
                   <p>10.000.000</p>
                 </div>{" "}
               </Card>
-            </CardWrapperMetaAtual> */}
+            </CardWrapperMetaAtual>
           </MetaAtualContainer>
 
-          {/* <ProximaMetaContainer>
+          <ProximaMetaContainer>
             <TitleProximaMeta>Proximas Metas</TitleProximaMeta>
             <ProximaMetaList>
               <CardWrapper>
@@ -101,10 +101,10 @@ export function Home() {
                 </Card>
               </CardWrapper>
             </ProximaMetaList>
-          </ProximaMetaContainer> */}
+          </ProximaMetaContainer>
         </MetaContainer>
 
-        {/* <GrindTrackerContainer>
+        <GrindTrackerContainer>
           <TitleGrindTracker>Grind Tracker</TitleGrindTracker>
           <CardGrindTrackerContainer>
             <CardListContainer>
@@ -146,7 +146,7 @@ export function Home() {
               </CardWrapperGrindTracker>
             </CardListContainer>
           </CardGrindTrackerContainer>
-        </GrindTrackerContainer> */}
+        </GrindTrackerContainer>
       </MetaAndTrackerContainer>
 
       <DiariasSemanaisContainer>

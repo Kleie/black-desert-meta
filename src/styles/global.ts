@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body, input, textarea, button {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Titillium Web', sans-serif;
         font-weight: 400;
         font-size: 1rem;
     }

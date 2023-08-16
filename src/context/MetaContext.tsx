@@ -109,7 +109,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (error) {
-      redirect("/login");
+      navigate("/login");
     }
 
     if (!loading && !error && data) {

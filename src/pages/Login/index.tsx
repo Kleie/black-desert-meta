@@ -1,20 +1,24 @@
-import { Container, LoginWrapper, LogoWrapper } from "./styled";
+import { Container, DiscordWrapper, LoginContainer, LogoWrraper } from "./styled";
 import logo from "../../assets/logo.svg";
-import { DiscordLogo } from "@phosphor-icons/react";
+import DiscordLogo from "../../assets/logo-discord.svg";
 
 export function Login() {
   return (
     <Container>
-      <LoginWrapper>
-        <LogoWrapper>
+      <LoginContainer>
+        <LogoWrraper>
           <img src={logo} alt="" />
-        </LogoWrapper>
-        <h1>Log In</h1>
-        <a href="http://localhost:4003/auth/discord/login">
-          <DiscordLogo size={39} weight="fill" />
-          Discord
-        </a>
-      </LoginWrapper>
+          <h1>Black Desert META’s</h1>
+        </LogoWrraper>
+
+        <DiscordWrapper>
+          <h2>Acesse a plataforma</h2>
+          <p>Faça login com o Discord para começar a construir suas metas ainda hoje.</p>
+          <a href="http://localhost:4003/auth/discord/login">
+            <img src={DiscordLogo} alt="" /> Discord
+          </a>
+        </DiscordWrapper>
+      </LoginContainer>
     </Container>
   );
 }

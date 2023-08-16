@@ -32,11 +32,6 @@ export const TitleDiaria = styled.h2`
   justify-content: space-between;
 `;
 
-export const TimeInTitleDiaria = styled.span`
-  font-size: 0.75rem;
-  color: ${(props) => props.theme["gray-100"]};
-`;
-
 export const CardWrapperDiaria = styled.ul`
   display: flex;
   flex-direction: column;
@@ -71,11 +66,6 @@ export const TitleSemanal = styled.h2`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const TimeInTitleSemanal = styled.span`
-  font-size: 0.75rem;
-  color: ${(props) => props.theme["gray-100"]};
 `;
 
 export const CardWrapperSemanal = styled.ul`
