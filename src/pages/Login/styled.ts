@@ -13,7 +13,7 @@ const leftToRight = keyframes`
 `;
 
 export const Container = styled.div`
-  background-image: url("/src/assets/shai-background.png");
+  background-image: url("/src/assets/shai-background.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

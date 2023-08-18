@@ -22,6 +22,7 @@ export const CardWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 0.875rem;
+  padding: 0.75rem;
 
   background: ${(props) => props.theme["black-300"]};
   border-radius: 6px;
@@ -45,6 +46,8 @@ export const ToolsGrindContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
+  width: 100%;
+  max-width: 24rem;
 `;
 
 export const BestSpotWrapper = styled.div`
@@ -55,22 +58,27 @@ export const BestSpotWrapper = styled.div`
 
   background: ${(props) => props.theme["black-500"]};
   border-radius: 6px;
-
-  h3 {
-    font-size: 0.875rem;
-  }
 `;
 
 export const BestSpot = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
   padding: 0.375rem 0.5rem;
 
-  background: url("/src/assets/background-gyfin.png");
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/src/assets/background-gyfin.webp") no-repeat;
+  background-size: cover;
   border-radius: 4px;
 `;
 
 export const BestSpotTitle = styled.div`
   display: flex;
   justify-content: space-between;
+
+  h3 {
+    font-size: 1rem;
+  }
 `;
 
 export const BestSpotInfo = styled.div`
@@ -81,16 +89,16 @@ export const BestSpotInfo = styled.div`
 export const infoBase = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 39px;
-  min-width: 99.33px;
+  flex: 1;
   padding: 0.25rem 0.5rem;
 
   background-color: ${(props) => props.theme["brown-500"]};
   border-radius: 2px;
-  font-size: 0.875rem;
+  font-weight: bold;
 
   span + span {
-    font-size: 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 400;
   }
 `;
 
@@ -98,4 +106,7 @@ export const InfoTotalSilver = styled(infoBase)``;
 
 export const InfoHours = styled(infoBase)``;
 
-export const InfoSilverHour = styled(infoBase)``;
+export const InfoSilverHour = styled(infoBase)`
+  background-color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme["brown-500"]};
+`;

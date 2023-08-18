@@ -14,6 +14,7 @@ import {
   ToolsGrindContainer,
 } from "./styled";
 import gyfin from "../../assets/gyfin.svg";
+import { SmileyXEyes } from "@phosphor-icons/react";
 
 export function GrindTraker() {
   return (
@@ -32,14 +33,6 @@ export function GrindTraker() {
               <li>drop 1</li>
               <li>drop 2</li>
             </CardDropsWrapper>
-            <span>^10%</span>
-            <span>ha uma hora</span>
-          </CardWrapper>
-          <CardWrapper>
-            <img src={gyfin} alt="" />
-            <span>Gyfin underground</span>
-            <span>750kk</span>
-            <CardDropsWrapper>drops</CardDropsWrapper>
             <span>^10%</span>
             <span>ha uma hora</span>
           </CardWrapper>
@@ -70,7 +63,13 @@ export function GrindTraker() {
               </BestSpotInfo>
             </BestSpot>
           </BestSpotWrapper>
-          <div>price check</div>
+          <div>
+            <h2>price check</h2>
+            <div>
+              <span>Coming Soon We're working hard to bring you something awesome. Stay tuned!</span>
+              <SmileyXEyes size={48} weight="fill" />
+            </div>
+          </div>
         </ToolsGrindContainer>
       </Container>
     </div>
