@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER } from "../data/querys";
 import { CREATE_DIARY, CREATE_WEEKLY, DELETE_DIARY, DELETE_WEEKLY, UPDATE_META_IS_COMPLETED } from "../data/mutations";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 interface ContextProps {
@@ -115,7 +115,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     if (!loading && !error && data) {
       setUser(data.user);
     }
-  }, [data, loading, error]);
+  }, [navigate, data, loading, error]);
 
   async function handleCreateDiary(title: string, description: string) {
     const now = new Date();

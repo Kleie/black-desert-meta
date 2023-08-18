@@ -3,6 +3,8 @@ import logo from "../../assets/logo.svg";
 import DiscordLogo from "../../assets/logo-discord.svg";
 
 export function Login() {
+  console.log(import.meta.env.VITE_API_LOGIN_URL);
+
   return (
     <Container>
       <LoginContainer>
@@ -14,7 +16,7 @@ export function Login() {
         <DiscordWrapper>
           <h2>Acesse a plataforma</h2>
           <p>Faça login com o Discord para começar a construir suas metas ainda hoje.</p>
-          <a href="http://localhost:4003/auth/discord/login">
+          <a href={import.meta.env.VITE_API_LOGIN_URL}>
             <img src={DiscordLogo} alt="" /> Discord
           </a>
         </DiscordWrapper>
