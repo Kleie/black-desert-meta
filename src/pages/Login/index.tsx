@@ -3,8 +3,6 @@ import logo from "../../assets/logo.svg";
 import DiscordLogo from "../../assets/logo-discord.svg";
 
 export function Login() {
-  console.log(import.meta.env.VITE_API_LOGIN_URL);
-
   return (
     <Container>
       <LoginContainer>
