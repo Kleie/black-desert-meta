@@ -1,21 +1,21 @@
 import { Card } from "../../components/UI/Card";
 import {
-  CardDiaria,
   CardMeta,
-  CardSemanal,
-  CardWrapperDiaria,
-  CardWrapperMeta,
-  CardWrapperSemanal,
-  DiariaArea,
+  DailyArea,
+  DailyCard,
+  DailyTitle,
+  DiariaCardWrapper,
   Loading,
+  MetaCardWrapper,
+  MetaTitle,
   MetasArea,
   MetasContainer,
   ModalWrapper,
-  SemanalArea,
   TitleCard,
-  TitleDiaria,
-  TitleMeta,
-  TitleSemanal,
+  WeeklyArea,
+  WeeklyCard,
+  WeeklyCardWrapper,
+  WeeklyTitle,
 } from "./styles";
 
 import itemTeste from "../../assets/Item-test.svg.svg";
@@ -23,6 +23,7 @@ import { Trash } from "@phosphor-icons/react";
 import { Modal } from "../../components/Modal";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
+import { defaultTheme } from "../../styles/themes/default";
 
 export function Metas() {
   const {
@@ -48,11 +49,11 @@ export function Metas() {
       </ModalWrapper>
 
       <MetasContainer>
-        <DiariaArea>
-          <TitleDiaria>Diárias</TitleDiaria>
+        <DailyArea>
+          <DailyTitle>Diárias</DailyTitle>
 
-          <CardWrapperDiaria>
-            <CardDiaria>
+          <DiariaCardWrapper>
+            <DailyCard>
               {user.diaries.length > 0 ? (
                 user.diaries.map((diary) => {
                   return (
@@ -63,7 +64,7 @@ export function Metas() {
                           <Loading />
                         ) : (
                           <button onClick={() => handleDeleteDiary(diary.id)} disabled={deleteDiaryLoading}>
-                            <Trash size={20} color="#A9543F" />
+                            <Trash size={20} color={defaultTheme["base-red"]} />
                           </button>
                         )}
                       </TitleCard>
@@ -74,15 +75,15 @@ export function Metas() {
               ) : (
                 <span>...</span>
               )}
-            </CardDiaria>
-          </CardWrapperDiaria>
-        </DiariaArea>
+            </DailyCard>
+          </DiariaCardWrapper>
+        </DailyArea>
 
-        <SemanalArea>
-          <TitleSemanal>Semanais</TitleSemanal>
+        <WeeklyArea>
+          <WeeklyTitle>Semanais</WeeklyTitle>
 
-          <CardWrapperSemanal>
-            <CardSemanal>
+          <WeeklyCardWrapper>
+            <WeeklyCard>
               {user.weeklies.length > 0 ? (
                 user.weeklies.map((weekly) => {
                   return (
@@ -93,7 +94,7 @@ export function Metas() {
                           <Loading />
                         ) : (
                           <button onClick={() => handleDeleteWeekly(weekly.id)} disabled={deleteDiaryLoading}>
-                            <Trash size={20} color="#A9543F" />
+                            <Trash size={20} color={defaultTheme["base-red"]} />
                           </button>
                         )}
                       </TitleCard>
@@ -104,14 +105,14 @@ export function Metas() {
               ) : (
                 <span>...</span>
               )}
-            </CardSemanal>
-          </CardWrapperSemanal>
-        </SemanalArea>
+            </WeeklyCard>
+          </WeeklyCardWrapper>
+        </WeeklyArea>
 
         <MetasArea>
-          <TitleMeta>Metas</TitleMeta>
+          <MetaTitle>Metas</MetaTitle>
 
-          <CardWrapperMeta>
+          <MetaCardWrapper>
             <CardMeta>
               <Card>
                 <img src={itemTeste} alt="" />
@@ -121,27 +122,7 @@ export function Metas() {
                 </div>
               </Card>
             </CardMeta>
-
-            <CardMeta>
-              <Card>
-                <img src={itemTeste} alt="" />
-                <div>
-                  <h3>Cinto Tungrade V</h3>
-                  <p>10.000.000</p>
-                </div>
-              </Card>
-            </CardMeta>
-
-            <CardMeta>
-              <Card>
-                <img src={itemTeste} alt="" />
-                <div>
-                  <h3>Cinto Tungrade V</h3>
-                  <p>10.000.000</p>
-                </div>
-              </Card>
-            </CardMeta>
-          </CardWrapperMeta>
+          </MetaCardWrapper>
         </MetasArea>
       </MetasContainer>
     </>

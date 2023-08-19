@@ -56,7 +56,7 @@ export const ModalWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   z-index: 99999;
   border-radius: 6px;
 
@@ -69,17 +69,17 @@ export const TitleModal = styled.div`
   gap: 0.5rem;
 
   input {
-    background-color: ${(props) => props.theme["black-300"]};
+    background-color: ${(props) => props.theme.secondary};
     border: 0;
     border-radius: 4px;
     padding: 0.75rem;
-    color: ${(props) => props.theme.white};
-    border: 1px solid ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme["base-white"]};
+    border: 1px solid ${(props) => props.theme["base-label"]};
 
     transition: 0.2s;
 
     &:focus {
-      border: 1px solid ${(props) => props.theme["brown-500"]};
+      border: 1px solid ${(props) => props.theme["base-button"]};
     }
   }
 `;
@@ -90,19 +90,19 @@ export const DescriptionModal = styled.div`
   gap: 0.5rem;
 
   textarea {
-    background-color: ${(props) => props.theme["black-300"]};
+    background-color: ${(props) => props.theme.secondary};
     border-radius: 4px;
     border: 0;
     padding: 0.75rem;
     min-height: 6.5rem;
-    color: ${(props) => props.theme.white};
-    border: 1px solid ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme["base-white"]};
+    border: 1px solid ${(props) => props.theme["base-label"]};
     resize: none;
 
     transition: 0.2s;
 
     &:focus {
-      border: 1px solid ${(props) => props.theme["brown-500"]};
+      border: 1px solid ${(props) => props.theme["base-button"]};
     }
   }
 `;
@@ -129,13 +129,13 @@ export const SelectMeta = styled.div`
   input + label {
     padding: 0.5rem;
     border-radius: 4px;
-    border: 2px solid ${(props) => props.theme["black-300"]};
+    border: 2px solid ${(props) => props.theme.secondary};
 
     cursor: pointer;
   }
 
   input[type="radio"]:checked + label {
-    background-color: ${(props) => props.theme["black-300"]};
+    background-color: ${(props) => props.theme.secondary};
   }
 `;
 
@@ -151,12 +151,12 @@ export const FooterModal = styled.div`
     padding: 0.5rem 0.75rem;
     border: none;
     cursor: pointer;
-    color: ${(props) => props.theme.white};
+    color: ${(props) => props.theme["base-white"]};
 
     transition: 0.2s;
 
     &:hover {
-      background: ${(props) => props.theme["black-300"]};
+      background: ${(props) => props.theme.secondary};
     }
   }
 `;
@@ -165,8 +165,8 @@ export const Button = styled.button`
   border: 0;
   border-radius: 4px;
   padding: 0.5rem 0.75rem;
-  background: ${(props) => props.theme["brown-500"]};
-  color: ${(props) => props.theme.white};
+  background: ${(props) => props.theme["base-button"]};
+  color: ${(props) => props.theme["base-white"]};
   cursor: pointer;
 
   &:disabled {
@@ -222,7 +222,7 @@ export const ItemModal = styled.div`
       justify-content: center;
       width: 49px;
       height: 49px;
-      border: 2px solid ${(props) => props.theme["black-300"]};
+      border: 2px solid ${(props) => props.theme.secondary};
       border-radius: 6px;
       animation: ${seeImg} 600ms ease;
     }
@@ -232,11 +232,11 @@ export const ItemModal = styled.div`
       margin-left: auto;
       padding: 0.75rem;
       border: none;
-      border-bottom: 1px solid ${(props) => props.theme["brown-500"]};
+      border-bottom: 1px solid ${(props) => props.theme["base-button"]};
       border-top-right-radius: 4px;
       border-top-left-radius: 4px;
-      background-color: ${(props) => props.theme["black-300"]};
-      color: ${(props) => props.theme.white};
+      background-color: ${(props) => props.theme.secondary};
+      color: ${(props) => props.theme["base-white"]};
 
       transition: 400ms ease;
       &:focus {
@@ -277,9 +277,9 @@ export const ButtonModal = styled.button<ButtonProps>`
   max-width: 32px;
   max-height: 32px;
 
-  border: 2px solid ${(props) => props.theme["black-300"]};
+  border: 2px solid ${(props) => props.theme.secondary};
   border-radius: 4px;
-  background: ${(props) => (props.selected ? "#AD864A" : "none")};
-  color: ${(props) => props.theme.white};
+  background: ${(props) => (props.selected ? props.theme["base-button"] : "none")};
+  color: ${(props) => props.theme["base-white"]};
   cursor: pointer;
 `;

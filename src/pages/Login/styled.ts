@@ -29,7 +29,7 @@ export const LoginContainer = styled.div`
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
 
-  background: ${(props) => props.theme["black-300"]};
+  background: ${(props) => props.theme.primary};
 
   animation: ${leftToRight} 1s ease-in-out;
 `;
@@ -65,7 +65,7 @@ export const DiscordWrapper = styled.div`
   }
 
   p {
-    color: ${(props) => props.theme["gray-200"]};
+    color: ${(props) => props.theme["base-paragraph"]};
   }
 
   a {
@@ -77,7 +77,7 @@ export const DiscordWrapper = styled.div`
 
     border-radius: 6px;
     font-weight: bold;
-    color: ${(props) => props.theme.white};
-    background: ${(props) => props.theme.blue};
+    color: ${(props) => props.theme["base-text"]};
+    background: ${(props) => props.theme["base-blue"]};
   }
 `;

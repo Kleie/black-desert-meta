@@ -15,7 +15,7 @@ export const ContentWrapper = styled.div`
   padding: 3rem 2rem;
 
   border-top-left-radius: 32px;
-  background: ${(props) => props.theme["black-300"]};
+  background: ${(props) => props.theme.secondary};
 
   header {
     margin-bottom: 1.68rem;
@@ -51,7 +51,7 @@ export const AvatarWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  outline: 2px solid ${(props) => props.theme["gray"]};
+  outline: 2px solid ${(props) => props.theme["base-label"]};
   border: 4px solid transparent;
 
   & > img {

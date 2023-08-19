@@ -5,7 +5,7 @@ interface CardWrapperProps {
 }
 
 export const CardWrapper = styled.div<CardWrapperProps>`
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   padding: ${(props) => `${props.padding}rem` || "0px"};
   border-radius: 8px;
 `;

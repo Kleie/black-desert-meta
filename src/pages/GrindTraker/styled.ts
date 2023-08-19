@@ -7,14 +7,14 @@ export const Container = styled.div`
   gap: 1.75rem;
 `;
 
-export const GrindTrackerWrapper = styled.div`
+export const GrindTrackerContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
   padding: 0.75rem;
   flex: 1;
 
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   border-radius: 6px;
 `;
 
@@ -24,7 +24,7 @@ export const CardWrapper = styled.div`
   gap: 0.875rem;
   padding: 0.75rem;
 
-  background: ${(props) => props.theme["black-300"]};
+  background: ${(props) => props.theme.secondary};
   border-radius: 6px;
 
   span:nth-child(6) {
@@ -38,11 +38,11 @@ export const CardDropsWrapper = styled.ul`
   gap: 0.625rem;
   padding: 0.375rem;
 
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   border-radius: 4px;
 `;
 
-export const ToolsGrindContainer = styled.div`
+export const GrindToolsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -56,7 +56,7 @@ export const BestSpotWrapper = styled.div`
   gap: 1.25rem;
   padding: 1.25rem;
 
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   border-radius: 6px;
 `;
 
@@ -81,7 +81,7 @@ export const BestSpotTitle = styled.div`
   }
 `;
 
-export const BestSpotInfo = styled.div`
+export const BestSpotInfoWrapper = styled.div`
   display: flex;
   gap: 0.375rem;
 `;
@@ -92,7 +92,7 @@ export const infoBase = styled.div`
   flex: 1;
   padding: 0.25rem 0.5rem;
 
-  background-color: ${(props) => props.theme["brown-500"]};
+  background-color: ${(props) => props.theme["base-button"]};
   border-radius: 2px;
   font-weight: bold;
 
@@ -102,11 +102,30 @@ export const infoBase = styled.div`
   }
 `;
 
-export const InfoTotalSilver = styled(infoBase)``;
+export const TotalSilverInfo = styled(infoBase)``;
 
-export const InfoHours = styled(infoBase)``;
+export const HourlyInfo = styled(infoBase)``;
 
-export const InfoSilverHour = styled(infoBase)`
-  background-color: ${(props) => props.theme.white};
-  color: ${(props) => props.theme["brown-500"]};
+export const HourlySilverInfo = styled(infoBase)`
+  background-color: ${(props) => props.theme["base-white"]};
+  color: ${(props) => props.theme["base-button"]};
+`;
+
+export const PriceCheckContainer = styled.div`
+  padding: 1.25rem;
+
+  background: ${(props) => props.theme.primary};
+  border-radius: 6px;
+`;
+
+export const ComingSoonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 4.625rem 1.25rem;
+  text-align: center;
+
+  font-size: 0.875rem;
+  opacity: 0.2;
 `;

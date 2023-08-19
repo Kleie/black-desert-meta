@@ -1,32 +1,32 @@
 import { Card } from "../../components/UI/Card";
 import {
-  CardDiariasWrapper,
-  CardGrindTrackerContainer,
   CardListContainer,
-  CardSemanaisWrapper,
   CardWrapper,
-  CardWrapperGrindTracker,
-  CardWrapperMetaAtual,
-  Diarias,
-  DiariasContainer,
-  DiariasList,
-  DiariasSemanaisContainer,
+  CurrentMetaCardWrapper,
+  CurrentMetaContainer,
+  CurrentMetaTitle,
+  Daily,
+  DailyAndWeeklyContainer,
+  DailyCardWrapper,
+  DailyContainer,
+  DailyList,
+  DailyTitle,
+  GrindTrackerCardContainer,
+  GrindTrackerCardWrapper,
   GrindTrackerContainer,
+  GrindTrackerTitle,
   HomeContainer,
-  MetaAndTrackerContainer,
-  MetaAtualContainer,
+  MetaAndGrindTrackerContainer,
   MetaContainer,
+  NextMetaContainer,
+  NextMetaList,
+  NextMetaTitle,
   ProgressBar,
-  ProximaMetaContainer,
-  ProximaMetaList,
-  Semanais,
-  SemanaisContainer,
-  SemanaisList,
-  TitleDiarias,
-  TitleGrindTracker,
-  TitleMetaAtual,
-  TitleProximaMeta,
-  TitleSemanais,
+  Weekly,
+  WeeklyCardWrapper,
+  WeeklyContainer,
+  WeeklyList,
+  WeeklyTitle,
 } from "./styles";
 
 import itemTeste from "../../assets/Item-test.svg.svg";
@@ -46,13 +46,13 @@ export function Home() {
     return <p>Error no user</p>;
   }
 
-  const diariasCompletas = user?.diaries.filter((diaria) => {
+  const completedDaily = user?.diaries.filter((diaria) => {
     if (diaria.isCompleted) {
       return diaria;
     }
   });
 
-  const semanaisCompletas = user?.weeklies.filter((semanal) => {
+  const completedWeekly = user?.weeklies.filter((semanal) => {
     if (semanal.isCompleted) {
       return semanal;
     }
@@ -60,15 +60,15 @@ export function Home() {
 
   return (
     <HomeContainer>
-      <MetaAndTrackerContainer>
+      <MetaAndGrindTrackerContainer>
         <MetaContainer>
-          <MetaAtualContainer>
-            <TitleMetaAtual>
+          <CurrentMetaContainer>
+            <CurrentMetaTitle>
               Meta <span>2.000.000.000</span>
-            </TitleMetaAtual>
+            </CurrentMetaTitle>
             {/* barra de progresso aqui */}
             <ProgressBar></ProgressBar>
-            <CardWrapperMetaAtual>
+            <CurrentMetaCardWrapper>
               <Card padding={0.5}>
                 <img src={itemTeste} alt="" />
                 <div>
@@ -76,12 +76,12 @@ export function Home() {
                   <p>10.000.000</p>
                 </div>{" "}
               </Card>
-            </CardWrapperMetaAtual>
-          </MetaAtualContainer>
+            </CurrentMetaCardWrapper>
+          </CurrentMetaContainer>
 
-          <ProximaMetaContainer>
-            <TitleProximaMeta>Proximas Metas</TitleProximaMeta>
-            <ProximaMetaList>
+          <NextMetaContainer>
+            <NextMetaTitle>Proximas Metas</NextMetaTitle>
+            <NextMetaList>
               <CardWrapper>
                 <Card padding={0.5}>
                   <img src={itemTeste} alt="" />
@@ -97,18 +97,18 @@ export function Home() {
                   <div>
                     <h3>Cinto Tungrade V</h3>
                     <p>10.000.000</p>
-                  </div>{" "}
+                  </div>
                 </Card>
               </CardWrapper>
-            </ProximaMetaList>
-          </ProximaMetaContainer>
+            </NextMetaList>
+          </NextMetaContainer>
         </MetaContainer>
 
         <GrindTrackerContainer>
-          <TitleGrindTracker>Grind Tracker</TitleGrindTracker>
-          <CardGrindTrackerContainer>
+          <GrindTrackerTitle>Grind Tracker</GrindTrackerTitle>
+          <GrindTrackerCardContainer>
             <CardListContainer>
-              <CardWrapperGrindTracker>
+              <GrindTrackerCardWrapper>
                 <Card>
                   <img src={gyfinTeste} alt="" />
                   <h3>Gyfin</h3>
@@ -116,52 +116,25 @@ export function Home() {
                   <span>ha uma hora</span>
                   <span>^^ 10%</span>
                 </Card>
-              </CardWrapperGrindTracker>
-              <CardWrapperGrindTracker>
-                <Card>
-                  <img src={gyfinTeste} alt="" />
-                  <h3>Gyfin</h3>
-                  <p>750k</p>
-                  <span>ha uma hora</span>
-                  <span>^^ 10%</span>
-                </Card>
-              </CardWrapperGrindTracker>
-              <CardWrapperGrindTracker>
-                <Card>
-                  <img src={gyfinTeste} alt="" />
-                  <h3>Gyfin</h3>
-                  <p>750k</p>
-                  <span>ha uma hora</span>
-                  <span>^^ 10%</span>
-                </Card>
-              </CardWrapperGrindTracker>
-              <CardWrapperGrindTracker>
-                <Card>
-                  <img src={gyfinTeste} alt="" />
-                  <h3>Gyfin</h3>
-                  <p>750k</p>
-                  <span>ha uma hora</span>
-                  <span>^^ 10%</span>
-                </Card>
-              </CardWrapperGrindTracker>
+              </GrindTrackerCardWrapper>
             </CardListContainer>
-          </CardGrindTrackerContainer>
+          </GrindTrackerCardContainer>
         </GrindTrackerContainer>
-      </MetaAndTrackerContainer>
+      </MetaAndGrindTrackerContainer>
 
-      <DiariasSemanaisContainer>
-        <DiariasContainer>
-          <TitleDiarias>
+      <DailyAndWeeklyContainer>
+        <DailyContainer>
+          <DailyTitle>
             <h2>Diarias</h2>
             <div>
-              <span>{`concluidas ${diariasCompletas?.length} de ${user.diaries.length}`}</span>
+              <span>{`concluidas ${completedDaily?.length} de ${user.diaries.length}`}</span>
               <TimeLeft />
             </div>
-          </TitleDiarias>
+          </DailyTitle>
 
-          <Diarias>
-            <DiariasList>
-              <CardDiariasWrapper>
+          <Daily>
+            <DailyList>
+              <DailyCardWrapper>
                 {user.diaries.length > 0 ? (
                   user.diaries.map((diary) => {
                     return (
@@ -174,24 +147,24 @@ export function Home() {
                 ) : (
                   <span>...</span>
                 )}
-              </CardDiariasWrapper>
-            </DiariasList>
-          </Diarias>
-        </DiariasContainer>
+              </DailyCardWrapper>
+            </DailyList>
+          </Daily>
+        </DailyContainer>
 
-        <SemanaisContainer>
-          <TitleSemanais>
+        <WeeklyContainer>
+          <WeeklyTitle>
             <h2>Semanais</h2>
             <div>
-              <span>{`concluidas ${semanaisCompletas?.length} de ${user.weeklies.length}`}</span>
+              <span>{`concluidas ${completedWeekly?.length} de ${user.weeklies.length}`}</span>
 
               <WeekLeft />
             </div>
-          </TitleSemanais>
+          </WeeklyTitle>
 
-          <Semanais>
-            <SemanaisList>
-              <CardSemanaisWrapper>
+          <Weekly>
+            <WeeklyList>
+              <WeeklyCardWrapper>
                 {user.weeklies.length > 0 ? (
                   user.weeklies.map((weekly) => {
                     return (
@@ -204,11 +177,11 @@ export function Home() {
                 ) : (
                   <span>...</span>
                 )}
-              </CardSemanaisWrapper>
-            </SemanaisList>
-          </Semanais>
-        </SemanaisContainer>
-      </DiariasSemanaisContainer>
+              </WeeklyCardWrapper>
+            </WeeklyList>
+          </Weekly>
+        </WeeklyContainer>
+      </DailyAndWeeklyContainer>
     </HomeContainer>
   );
 }

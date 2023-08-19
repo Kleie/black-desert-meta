@@ -9,7 +9,7 @@ export const Navigation = styled.nav`
   gap: 2rem;
 
   .active {
-    color: ${(props) => props.theme.white};
+    color: ${(props) => props.theme["base-white"]};
   }
 
   ul {
@@ -19,7 +19,7 @@ export const Navigation = styled.nav`
   }
 
   a {
-    color: ${(props) => props.theme.gray};
+    color: ${(props) => props.theme["base-label"]};
     padding: 1.25rem 2rem;
 
     display: flex;
@@ -28,7 +28,7 @@ export const Navigation = styled.nav`
     transition: all 0.4s ease;
 
     &:hover {
-      color: ${(props) => props.theme.white};
+      color: ${(props) => props.theme["base-white"]};
       background: rgba(255, 255, 255, 0.1);
     }
   }
@@ -41,7 +41,7 @@ export const Navigation = styled.nav`
 export const LogoutButton = styled.button`
   border: none;
   color: #fff;
-  background: ${(props) => props.theme["black-300"]};
+  background: ${(props) => props.theme.secondary};
   border-radius: 6px;
   padding: 1rem;
   margin-top: auto;

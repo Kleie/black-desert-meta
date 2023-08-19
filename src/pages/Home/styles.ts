@@ -6,10 +6,10 @@ export const HomeContainer = styled.div`
   gap: 1.75rem;
 `;
 
-export const MetaAndTrackerContainer = styled.div`
+export const MetaAndGrindTrackerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 7.5rem;
   flex: 1;
 `;
 
@@ -19,19 +19,26 @@ export const MetaContainer = styled.div`
   flex: 1;
 `;
 
-export const MetaAtualContainer = styled.div`
+export const CurrentMetaContainer = styled.div`
   flex: 1;
+`;
+
+export const CurrentMetaTitle = styled.h2`
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 15.18rem;
 `;
 
 export const ProgressBar = styled.div`
   flex: 1;
   padding: 0.25rem;
   margin: 1.25rem 0;
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   border-radius: 99px;
 `;
 
-export const CardWrapperMetaAtual = styled.div`
+export const CurrentMetaCardWrapper = styled.div`
   /* div do componente card */
   & > div {
     display: flex;
@@ -41,7 +48,7 @@ export const CardWrapperMetaAtual = styled.div`
   }
 
   h3 {
-    color: ${(props) => props.theme["brown-500"]};
+    color: ${(props) => props.theme["base-button"]};
     font-size: 0.875rem;
   }
 
@@ -56,21 +63,14 @@ export const CardWrapperMetaAtual = styled.div`
   }
 `;
 
-export const TitleMetaAtual = styled.h2`
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 15.18rem;
-`;
+export const NextMetaContainer = styled.div``;
 
-export const ProximaMetaContainer = styled.div``;
-
-export const TitleProximaMeta = styled.h2`
+export const NextMetaTitle = styled.h2`
   font-size: 1rem;
   padding: 0.125rem 8.06rem 1.56rem 0;
 `;
 
-export const ProximaMetaList = styled.ul`
+export const NextMetaList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -86,7 +86,7 @@ export const CardWrapper = styled.li`
   }
 
   h3 {
-    color: ${(props) => props.theme["brown-500"]};
+    color: ${(props) => props.theme["base-button"]};
     font-size: 0.875rem;
   }
 
@@ -109,10 +109,10 @@ export const GrindTrackerContainer = styled.div`
   flex: 1;
 `;
 
-export const TitleGrindTracker = styled.h2``;
+export const GrindTrackerTitle = styled.h2``;
 
-export const CardGrindTrackerContainer = styled.div`
-  background: ${(props) => props.theme["black-500"]};
+export const GrindTrackerCardContainer = styled.div`
+  background: ${(props) => props.theme.primary};
   border-radius: 6px;
 `;
 
@@ -123,13 +123,13 @@ export const CardListContainer = styled.ul`
   gap: 0.52rem;
 `;
 
-export const CardWrapperGrindTracker = styled.li`
+export const GrindTrackerCardWrapper = styled.li`
   & > div {
     display: flex;
     align-items: center;
     gap: 0.875rem;
     padding: 0.25rem;
-    background: ${(props) => props.theme["black-300"]};
+    background: ${(props) => props.theme.secondary};
   }
 
   img {
@@ -152,16 +152,16 @@ export const CardWrapperGrindTracker = styled.li`
 
   :nth-child(4) {
     font-size: 0.75rem;
-    color: ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme["base-label"]};
   }
   :nth-child(5) {
     font-size: 0.875rem;
-    color: ${(props) => props.theme.green};
+    color: ${(props) => props.theme["base-green"]};
   }
 `;
 
 // diarias e semanais
-export const DiariasSemanaisContainer = styled.div`
+export const DailyAndWeeklyContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -170,11 +170,11 @@ export const DiariasSemanaisContainer = styled.div`
 
 // diarias
 
-export const DiariasContainer = styled.div`
+export const DailyContainer = styled.div`
   padding: 0 1.5rem;
 `;
 
-export const TitleDiarias = styled.div`
+export const DailyTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 1.25rem;
@@ -190,13 +190,13 @@ export const TitleDiarias = styled.div`
     flex: 1;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme["base-label"]};
   }
 `;
 
-export const Diarias = styled.div``;
+export const Daily = styled.div``;
 
-export const DiariasList = styled.ul`
+export const DailyList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -206,7 +206,7 @@ export const DiariasList = styled.ul`
   overflow-x: hidden;
 `;
 
-export const CardDiariasWrapper = styled.li`
+export const DailyCardWrapper = styled.li`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -223,7 +223,7 @@ export const CardDiariasWrapper = styled.li`
   }
 
   p {
-    color: ${(props) => props.theme["brown-300"]};
+    color: ${(props) => props.theme["base-label"]};
     font-size: 0.875rem;
   }
 
@@ -240,17 +240,11 @@ export const CardDiariasWrapper = styled.li`
 
 // semanais
 
-export const SemanaisSemanaisContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
-
-export const SemanaisContainer = styled.div`
+export const WeeklyContainer = styled.div`
   padding: 0 1.5rem;
 `;
 
-export const TitleSemanais = styled.div`
+export const WeeklyTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 1.25rem;
@@ -266,7 +260,7 @@ export const TitleSemanais = styled.div`
     flex: 1;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme["base-label"]};
   }
 
   & > :nth-child(2) {
@@ -274,9 +268,9 @@ export const TitleSemanais = styled.div`
   }
 `;
 
-export const Semanais = styled.div``;
+export const Weekly = styled.div``;
 
-export const SemanaisList = styled.ul`
+export const WeeklyList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -286,7 +280,7 @@ export const SemanaisList = styled.ul`
   overflow-x: hidden;
 `;
 
-export const CardSemanaisWrapper = styled.li`
+export const WeeklyCardWrapper = styled.li`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -304,7 +298,7 @@ export const CardSemanaisWrapper = styled.li`
   }
 
   p {
-    color: ${(props) => props.theme["brown-300"]};
+    color: ${(props) => props.theme["base-label"]};
     font-size: 0.875rem;
   }
 

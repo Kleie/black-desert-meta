@@ -1,17 +1,19 @@
 import {
   BestSpot,
-  BestSpotInfo,
+  BestSpotInfoWrapper,
   BestSpotTitle,
   BestSpotWrapper,
   ButtonWrapper,
   CardDropsWrapper,
   CardWrapper,
+  ComingSoonWrapper,
   Container,
-  GrindTrackerWrapper,
-  InfoHours,
-  InfoSilverHour,
-  InfoTotalSilver,
-  ToolsGrindContainer,
+  GrindToolsContainer,
+  GrindTrackerContainer,
+  HourlyInfo,
+  HourlySilverInfo,
+  PriceCheckContainer,
+  TotalSilverInfo,
 } from "./styled";
 import gyfin from "../../assets/gyfin.svg";
 import { SmileyXEyes } from "@phosphor-icons/react";
@@ -24,7 +26,7 @@ export function GrindTraker() {
       </ButtonWrapper>
 
       <Container>
-        <GrindTrackerWrapper>
+        <GrindTrackerContainer>
           <CardWrapper>
             <img src={gyfin} alt="" />
             <span>Gyfin Rhasia Temple</span>
@@ -36,9 +38,9 @@ export function GrindTraker() {
             <span>^10%</span>
             <span>ha uma hora</span>
           </CardWrapper>
-        </GrindTrackerWrapper>
+        </GrindTrackerContainer>
 
-        <ToolsGrindContainer>
+        <GrindToolsContainer>
           <BestSpotWrapper>
             <h2>Best Spot</h2>
             <BestSpot>
@@ -47,30 +49,31 @@ export function GrindTraker() {
                 <img src={gyfin} alt="" />
               </BestSpotTitle>
 
-              <BestSpotInfo>
-                <InfoTotalSilver>
+              <BestSpotInfoWrapper>
+                <TotalSilverInfo>
                   <span>2.5b</span>
                   <span>total de prata</span>
-                </InfoTotalSilver>
-                <InfoHours>
+                </TotalSilverInfo>
+                <HourlyInfo>
                   <span>25h</span>
                   <span>total de horas</span>
-                </InfoHours>
-                <InfoSilverHour>
+                </HourlyInfo>
+                <HourlySilverInfo>
                   <span>177kk</span>
                   <span>prata/hora</span>
-                </InfoSilverHour>
-              </BestSpotInfo>
+                </HourlySilverInfo>
+              </BestSpotInfoWrapper>
             </BestSpot>
           </BestSpotWrapper>
-          <div>
-            <h2>price check</h2>
-            <div>
+
+          <PriceCheckContainer>
+            <h2>Price Check</h2>
+            <ComingSoonWrapper>
               <span>Coming Soon We're working hard to bring you something awesome. Stay tuned!</span>
               <SmileyXEyes size={48} weight="fill" />
-            </div>
-          </div>
-        </ToolsGrindContainer>
+            </ComingSoonWrapper>
+          </PriceCheckContainer>
+        </GrindToolsContainer>
       </Container>
     </div>
   );

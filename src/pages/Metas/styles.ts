@@ -4,8 +4,8 @@ export const ModalWrapper = styled.div`
   & > button {
     padding: 0.5rem 0.75rem;
     border-radius: 4px;
-    background-color: ${(props) => props.theme["brown-200"]};
-    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme["base-button"]};
+    color: ${(props) => props.theme["base-white"]};
     border: 0;
     cursor: pointer;
   }
@@ -22,9 +22,9 @@ export const BaseAreas = styled.div`
   overflow-wrap: break-word;
 `;
 
-export const DiariaArea = styled(BaseAreas)``;
+export const DailyArea = styled(BaseAreas)``;
 
-export const TitleDiaria = styled.h2`
+export const DailyTitle = styled.h2`
   padding: 1.5rem 0;
   font-size: 1.25rem;
   display: flex;
@@ -32,12 +32,12 @@ export const TitleDiaria = styled.h2`
   justify-content: space-between;
 `;
 
-export const CardWrapperDiaria = styled.ul`
+export const DiariaCardWrapper = styled.ul`
   display: flex;
   flex-direction: column;
 `;
 
-export const CardDiaria = styled.li`
+export const DailyCard = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -58,9 +58,9 @@ export const CardDiaria = styled.li`
 `;
 
 // semanal area
-export const SemanalArea = styled(BaseAreas)``;
+export const WeeklyArea = styled(BaseAreas)``;
 
-export const TitleSemanal = styled.h2`
+export const WeeklyTitle = styled.h2`
   padding: 1.5rem 0;
   font-size: 1.25rem;
   display: flex;
@@ -68,11 +68,11 @@ export const TitleSemanal = styled.h2`
   justify-content: space-between;
 `;
 
-export const CardWrapperSemanal = styled.ul`
+export const WeeklyCardWrapper = styled.ul`
   display: flex;
   flex-direction: column;
 `;
-export const CardSemanal = styled.li`
+export const WeeklyCard = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -109,25 +109,25 @@ export const TitleCard = styled.div`
     cursor: pointer;
 
     &:hover {
-      background: ${(props) => props.theme["black-300"]};
+      background: ${(props) => props.theme.secondary};
     }
   }
 `;
 
 // meta area
 export const MetasArea = styled.div`
-  background: ${(props) => props.theme["black-500"]};
+  background: ${(props) => props.theme.primary};
   text-transform: capitalize;
   padding: 1.25rem;
   flex: 1;
   border-radius: 8px;
 `;
 
-export const TitleMeta = styled.h2`
+export const MetaTitle = styled.h2`
   font-size: 1.25rem;
 `;
 
-export const CardWrapperMeta = styled.ul`
+export const MetaCardWrapper = styled.ul`
   padding-top: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -141,7 +141,7 @@ export const CardMeta = styled.li`
     align-items: center;
     gap: 0.625rem;
     padding: 0.5rem;
-    background: ${(props) => props.theme["black-300"]};
+    background: ${(props) => props.theme.secondary};
   }
 
   /* div children */
@@ -149,7 +149,7 @@ export const CardMeta = styled.li`
   }
 
   h3 {
-    color: ${(props) => props.theme["brown-500"]};
+    color: ${(props) => props.theme["base-button"]};
     font-size: 0.875rem;
   }
 
