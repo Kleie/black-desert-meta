@@ -42,7 +42,7 @@ export function Metas() {
 
   return (
     <>
-      {modalVisibility && <Modal />}
+      {modalVisibility && <Modal type="meta" />}
 
       <ModalWrapper>
         <button onClick={handleOpenModal}>Adicionar uma nova meta</button>

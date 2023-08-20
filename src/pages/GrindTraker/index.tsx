@@ -15,14 +15,20 @@ import {
   PriceCheckContainer,
   TotalSilverInfo,
 } from "./styled";
+import { useMetaContext } from "../../hooks/useMetaContext";
+import { Modal } from "../../components/Modal";
+
 import gyfin from "../../assets/gyfin.svg";
 import { SmileyXEyes } from "@phosphor-icons/react";
 
 export function GrindTraker() {
+  const { modalVisibility, handleOpenModal } = useMetaContext();
   return (
     <div>
+      {modalVisibility && <Modal type="grind" />}
+
       <ButtonWrapper>
-        <button>Adicionar um novo grind</button>
+        <button onClick={handleOpenModal}>Adicionar um novo grind</button>
       </ButtonWrapper>
 
       <Container>

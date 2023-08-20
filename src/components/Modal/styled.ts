@@ -51,7 +51,7 @@ export const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  padding: 2.5rem;
+  /* padding: 2.5rem; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -61,6 +61,10 @@ export const ModalWrapper = styled.div`
   border-radius: 6px;
 
   animation: ${topToCenter} 1s ease-in-out;
+`;
+
+export const MetaWrapper = styled.div`
+  padding: 2.5rem;
 `;
 
 export const TitleModal = styled.div`
@@ -143,7 +147,7 @@ export const FooterModal = styled.div`
   display: flex;
   align-self: flex-end;
   gap: 1.125rem;
-  padding: 32px 0px 0 163px;
+  padding: 2rem 0 0 10rem;
 
   button + button {
     background: transparent;
@@ -152,6 +156,7 @@ export const FooterModal = styled.div`
     border: none;
     cursor: pointer;
     color: ${(props) => props.theme["base-white"]};
+    z-index: 1;
 
     transition: 0.2s;
 
@@ -168,6 +173,7 @@ export const Button = styled.button`
   background: ${(props) => props.theme["base-button"]};
   color: ${(props) => props.theme["base-white"]};
   cursor: pointer;
+  z-index: 1;
 
   &:disabled {
     cursor: not-allowed;
@@ -282,4 +288,98 @@ export const ButtonModal = styled.button<ButtonProps>`
   background: ${(props) => (props.selected ? props.theme["base-button"] : "none")};
   color: ${(props) => props.theme["base-white"]};
   cursor: pointer;
+`;
+
+// grind tracker
+export const Border = styled.div`
+  margin: 1.375rem 0;
+`;
+
+export const GrindWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem;
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const GrindSelected = styled.div``;
+
+export const GrindTitle = styled.div`
+  img {
+    width: 5.25rem;
+  }
+`;
+
+export const GrindInfo = styled.div`
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export const GrindDrops = styled.div`
+  img {
+    margin-bottom: 1.375rem;
+  }
+
+  & > ul {
+    background-color: red;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-height: 13rem;
+  }
+  & > ul > li {
+    display: flex;
+    gap: 0.5rem;
+  }
+  & > ul > li > input {
+    max-width: 1.75rem;
+  }
+`;
+
+export const InputStyled = styled.input`
+  position: relative;
+
+  width: 100%;
+  margin-left: auto;
+  padding: 0.75rem;
+  border: none;
+  border-bottom: 1px solid ${(props) => props.theme["base-button"]};
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  background-color: ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme["base-white"]};
+`;
+
+export const ULStyled = styled.ul`
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 2;
+
+  background: ${(props) => props.theme.secondary};
+
+  color: ${(props) => props.theme["base-red"]};
+
+  & > li {
+    cursor: pointer;
+  }
+`;
+
+export const BackgroundToCloseGrindLIst = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 `;

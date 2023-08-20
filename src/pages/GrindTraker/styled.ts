@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
-export const ButtonWrapper = styled.div``;
+export const ButtonWrapper = styled.div`
+  margin: 1.5rem 0;
+
+  button {
+    padding: 0.5rem 0.75rem;
+
+    border: none;
+    border-radius: 4px;
+    background: ${(props) => props.theme["base-button"]};
+    color: ${(props) => props.theme["base-white"]};
+    cursor: pointer;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
