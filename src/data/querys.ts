@@ -38,3 +38,16 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_ITEMS = gql`
+  query GET_ITEMS {
+    items {
+      id
+      name
+      price
+      tier
+      image
+      type
+    }
+  }
+`;

@@ -8,6 +8,7 @@ export const defaultTheme = {
   "base-white": "#f9f9f9",
   "base-button": "#8f6c3e",
   "base-button-hover": "#AD864A",
+  "base-input": "#25272A",
   "base-label": "#8E8E8E",
   "base-text": "#DCDCDC",
   "base-paragraph": "#756966",

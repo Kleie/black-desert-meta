@@ -1,4 +1,4 @@
-import { styled, keyframes } from "styled-components";
+import { styled, keyframes, css } from "styled-components";
 
 const seeImg = keyframes`
   from {
@@ -215,7 +215,91 @@ export const MetaModal = styled.div`
   gap: 1.75rem;
 `;
 
-export const ItemModal = styled.div`
+export const ItemInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+interface ListArrowProps {
+  collapsed: boolean;
+}
+
+export const ListArrow = styled.button<ListArrowProps>`
+  border: none;
+  position: absolute;
+  top: 50%;
+
+  right: 12px;
+
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  transition: all 0.4s ease;
+
+  ${(props) =>
+    props.collapsed
+      ? css`
+          transform: translateY(-50%) rotate(180deg);
+        `
+      : css`
+          transform: translateY(-50%) rotate(0);
+        `}
+
+  & > img {
+    width: 80%;
+  }
+`;
+
+export const ItemList = styled.ul`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 80%;
+  overflow: hidden;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  animation: listExpand 600ms ease;
+  background-color: #2a2b2d;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.25rem 2px;
+
+  @keyframes listExpand {
+    0% {
+      max-height: 0;
+    }
+    100% {
+      max-height: 250px;
+    }
+  }
+`;
+
+export const Item = styled.li`
+  padding: 0.25rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  column-gap: 0.45rem;
+  background: ${(props) => props.theme["base-input"]};
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+`;
+
+export const ItemImageWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+
+  & > img {
+    width: 100%;
+  }
+`;
+
+export const ItemModal = styled.div<{ hasContent: boolean; isFocused: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -225,7 +309,7 @@ export const ItemModal = styled.div`
     display: flex;
     align-items: center;
 
-    span {
+    & > span {
       position: absolute;
       display: flex;
       align-items: center;
@@ -249,11 +333,13 @@ export const ItemModal = styled.div`
       color: ${(props) => props.theme["base-white"]};
 
       transition: width 400ms ease, border-color 200ms ease;
-
-      &:focus {
-        width: 80%;
-        border-bottom: 1px solid ${(props) => props.theme["base-button"]};
-      }
+      ${(props) =>
+        props.hasContent || props.isFocused
+          ? css`
+              width: 80%;
+              border-bottom: 1px solid ${(props) => props.theme["base-button"]};
+            `
+          : css``}
     }
   }
 `;

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   BackgroundToCloseGrindLIst,
   Border,
@@ -12,8 +12,14 @@ import {
   GrindWrapper,
   InputStyled,
   InputWrapper,
+  Item,
+  ItemImageWrapper,
+  ItemInputWrapper,
+  ItemList,
+  ItemListWrapper,
   ItemModal,
   LevelModal,
+  ListArrow,
   Loading,
   MetaModal,
   MetaWrapper,
@@ -28,15 +34,33 @@ import {
 import gyfin from "../../assets/gyfin.svg";
 import agrisIcon from "../../assets/agris-icon.svg";
 import border from "../../assets/border-icon.svg";
+import polygon from "../../assets/polygon.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
 import { Button } from "../UI/Button";
+import { useQuery } from "@apollo/client";
+import { GET_ITEMS } from "../../data/querys";
 
 interface ModalProps {
   type: "meta" | "grind";
 }
 
+interface GetItemsResponse {
+  items: Item[];
+}
+
+interface Item {
+  id: string;
+  name: string;
+  price: string;
+  tier: "1" | "2" | "3" | "4" | "5";
+  image: string;
+  type: "accessory" | "armor" | "weapon";
+}
+
 export function Modal(props: ModalProps) {
+  const { data, loading, error } = useQuery<GetItemsResponse>(GET_ITEMS);
+
   const [radio, setRadio] = useState<"daily" | "weekly" | "meta">("daily");
   const [level, setLevel] = useState("V");
 
@@ -47,7 +71,11 @@ export function Modal(props: ModalProps) {
 
   const [grindLocale, setGrindLocale] = useState("");
   const [inputIsFocused, setInputIsFocused] = useState(false);
-  const grindInputRef = useRef<HTMLInputElement>(null);
+
+  const [selectedItem, setSelectedItem] = useState<Item>();
+  const [itemInputFilter, setItemInputFilter] = useState("");
+
+  const itemListRef = useRef<HTMLDivElement>(null);
 
   const { handleCloseModal, handleCreateDaily, handleCreateWeekly, createDailyLoading, createWeeklyLoading } =
     useMetaContext();
@@ -81,6 +109,18 @@ export function Modal(props: ModalProps) {
     setInputIsFocused(false);
   }
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (itemListRef.current && !itemListRef.current.contains(event.target as Node)) {
+        setIsFocused(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [itemListRef]);
+
   return (
     <ModalContainer>
       <ModalBackGround onClick={handleCloseModal} />
@@ -113,18 +153,47 @@ export function Modal(props: ModalProps) {
 
             {radio === "meta" ? (
               <MetaModal>
-                <ItemModal>
+                <ItemModal hasContent={!!selectedItem?.id} isFocused={isFocused}>
                   <label htmlFor="">Item</label>
                   <div>
-                    {isFocused && <span></span>}
-                    <input
-                      type="text"
-                      onChange={handleOnChangeTitle}
-                      value={titleInput}
-                      placeholder="Digite o nome to seu item."
-                      onFocus={() => setIsFocused(true)}
-                      onBlur={() => setIsFocused(false)}
-                    />
+                    {(isFocused && <span>{selectedItem?.image && <img src={selectedItem?.image} alt="" />}</span>) ||
+                      (!!selectedItem?.id && (
+                        <span>{selectedItem?.image && <img src={selectedItem?.image} alt="" />}</span>
+                      ))}
+
+                    <ItemInputWrapper ref={itemListRef}>
+                      <input
+                        type="text"
+                        onChange={(e) => setItemInputFilter(e.target.value)}
+                        value={itemInputFilter}
+                        placeholder="Digite o nome to seu item."
+                        onFocus={() => setIsFocused(true)}
+                      />
+                      <ListArrow collapsed={isFocused}>
+                        <img src={polygon} alt="" />
+                      </ListArrow>
+                      {isFocused && (
+                        <ItemList>
+                          {data &&
+                            data.items
+                              .filter((item) => item.name.toLowerCase().includes(itemInputFilter.toLowerCase()))
+                              .map((item) => (
+                                <Item
+                                  onClick={() => {
+                                    setSelectedItem(item);
+                                    setItemInputFilter(item.name);
+                                    setIsFocused(false);
+                                  }}
+                                >
+                                  <ItemImageWrapper>
+                                    <img src={item.image} alt="" />
+                                  </ItemImageWrapper>
+                                  <span>{item.name}</span>
+                                </Item>
+                              ))}
+                        </ItemList>
+                      )}
+                    </ItemInputWrapper>
                   </div>
                 </ItemModal>
                 <LevelModal>
@@ -282,7 +351,6 @@ export function Modal(props: ModalProps) {
                 type="text"
                 value={grindLocale}
                 onChange={(e) => setGrindLocale(e.target.value)}
-                ref={grindInputRef}
                 onFocus={() => setInputIsFocused(true)}
               />
 
