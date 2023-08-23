@@ -60,11 +60,16 @@ export const ModalWrapper = styled.div`
   z-index: 99999;
   border-radius: 6px;
 
-  animation: ${topToCenter} 1s ease-in-out;
+  animation: ${topToCenter} 0.7s ease;
 `;
 
 export const MetaWrapper = styled.div`
   padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.75rem;
+
+  max-width: 26rem;
 `;
 
 export const TitleModal = styled.div`
@@ -73,17 +78,17 @@ export const TitleModal = styled.div`
   gap: 0.5rem;
 
   input {
-    background-color: ${(props) => props.theme.secondary};
-    border: 0;
-    border-radius: 4px;
     padding: 0.75rem;
+    border: none;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    background-color: ${(props) => props.theme.secondary};
     color: ${(props) => props.theme["base-white"]};
-    border: 1px solid ${(props) => props.theme["base-label"]};
-
-    transition: 0.2s;
+    border-bottom: 1px solid transparent;
+    transition: all 0.1s ease;
 
     &:focus {
-      border: 1px solid ${(props) => props.theme["base-button"]};
+      border-bottom: 1px solid ${(props) => props.theme["base-button"]};
     }
   }
 `;
@@ -94,19 +99,19 @@ export const DescriptionModal = styled.div`
   gap: 0.5rem;
 
   textarea {
-    background-color: ${(props) => props.theme.secondary};
-    border-radius: 4px;
-    border: 0;
     padding: 0.75rem;
-    min-height: 6.5rem;
+    border: none;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    background-color: ${(props) => props.theme.secondary};
     color: ${(props) => props.theme["base-white"]};
-    border: 1px solid ${(props) => props.theme["base-label"]};
+    border-bottom: 1px solid transparent;
+    transition: all 0.1s ease;
+    min-height: 6.5rem;
     resize: none;
 
-    transition: 0.2s;
-
     &:focus {
-      border: 1px solid ${(props) => props.theme["base-button"]};
+      border-bottom: 1px solid ${(props) => props.theme["base-button"]};
     }
   }
 `;
@@ -208,7 +213,6 @@ export const MetaModal = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  max-width: 19.5rem;
 `;
 
 export const ItemModal = styled.div`
@@ -238,15 +242,17 @@ export const ItemModal = styled.div`
       margin-left: auto;
       padding: 0.75rem;
       border: none;
-      border-bottom: 1px solid ${(props) => props.theme["base-button"]};
+      border-bottom: 1px solid transparent;
       border-top-right-radius: 4px;
       border-top-left-radius: 4px;
       background-color: ${(props) => props.theme.secondary};
       color: ${(props) => props.theme["base-white"]};
 
-      transition: 400ms ease;
+      transition: width 400ms ease, border-color 200ms ease;
+
       &:focus {
         width: 80%;
+        border-bottom: 1px solid ${(props) => props.theme["base-button"]};
       }
     }
   }

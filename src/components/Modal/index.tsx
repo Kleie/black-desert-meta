@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import {
   BackgroundToCloseGrindLIst,
   Border,
-  Button,
   ButtonModal,
   DescriptionModal,
   FooterModal,
@@ -31,6 +30,7 @@ import agrisIcon from "../../assets/agris-icon.svg";
 import border from "../../assets/border-icon.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
+import { Button } from "../UI/Button";
 
 interface ModalProps {
   type: "meta" | "grind";
@@ -121,7 +121,7 @@ export function Modal(props: ModalProps) {
                       type="text"
                       onChange={handleOnChangeTitle}
                       value={titleInput}
-                      placeholder="Digite o titulo da meta."
+                      placeholder="Digite o nome to seu item."
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
                     />

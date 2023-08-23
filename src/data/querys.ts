@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_USER = gql`
-  query Query {
+  query GET_USER {
     user {
       id
       username
@@ -13,6 +13,7 @@ export const GET_USER = gql`
         isCompleted
         resetDay
         createdAt
+        updatedAt
       }
       weeklies {
         id
@@ -21,6 +22,18 @@ export const GET_USER = gql`
         isCompleted
         resetDay
         createdAt
+        updatedAt
+      }
+      goals {
+        id
+        item {
+          id
+          name
+          price
+          tier
+          image
+          type
+        }
       }
     }
   }

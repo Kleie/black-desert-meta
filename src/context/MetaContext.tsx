@@ -44,48 +44,50 @@ export interface CreateWeeklyResponse {
 }
 
 export interface User {
-  __typename: string;
   id: string;
   discord_id: string;
   username: string;
   avatar: string;
+  goals: Goal[];
   dailies: Daily[];
   weeklies: Weekly[];
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface Daily {
-  __typename: string;
   id: string;
   userId: string;
   title: string;
   description: string;
   isCompleted: boolean;
-  resetDay: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface Weekly {
-  __typename: string;
   id: string;
   userId: string;
   title: string;
   description: string;
   isCompleted: boolean;
-  resetDay: string;
-  createdAt: string;
-  updatedAt: string;
 }
+
+type Item = {
+  id: string;
+  name: string;
+  price: number;
+  tier: number;
+  image: string;
+  type: string;
+};
+
+type Goal = {
+  id: string;
+  item: Item;
+};
 
 export interface NewDaily {
   id: string;
   title: string;
   description: string;
   isCompleted: boolean;
-  resetDay: string;
-  createdAt: string;
 }
 
 export interface NewWeekly {
@@ -93,8 +95,6 @@ export interface NewWeekly {
   title: string;
   description: string;
   isCompleted: boolean;
-  resetDay: string;
-  createdAt: string;
 }
 
 export const Context = createContext({} as ContextProps);
@@ -109,6 +109,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [createWeekly, { loading: createWeeklyLoading }] = useMutation<CreateWeeklyResponse>(CREATE_WEEKLY);
   const [updateDailyIsCompleted] = useMutation<User>(UPDATE_DAILY_IS_COMPLETED);
   const [updateWeeklyIsCompleted] = useMutation<User>(UPDATE_WEEKLY_IS_COMPLETED);
+  
   const [deleteDaily, { loading: deleteDailyLoading }] = useMutation(DELETE_DIARY);
   const [deleteWeekly, { loading: deleteWeeklyLoading }] = useMutation(DELETE_WEEKLY);
 

@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const progressing = (progress: number) => keyframes`
+  from {
+    width: 0%
+  }
+  to {
+    width: ${progress}%;
+  }
+`;
 
 // container geral
 export const HomeContainer = styled.div`
@@ -30,12 +39,29 @@ export const CurrentMetaTitle = styled.h2`
   gap: 15.18rem;
 `;
 
-export const ProgressBar = styled.div`
+interface ProgressBarProps {
+  progress?: number;
+}
+
+export const ProgressBar = styled.div<ProgressBarProps>`
+  position: relative;
   flex: 1;
   padding: 0.25rem;
   margin: 1.25rem 0;
   background: ${(props) => props.theme.primary};
   border-radius: 99px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ${(props) => props.progress || 0}%;
+    background-color: ${(props) => props.theme["base-button"]};
+    border-radius: 99px;
+    animation: ${(props) => progressing(props.progress || 0)} 0.7s ease;
+  }
 `;
 
 export const CurrentMetaCardWrapper = styled.div`
@@ -229,11 +255,11 @@ export const DailyCardWrapper = styled.li`
   }
 
   h3 {
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
   p {
-    color: ${(props) => props.theme["base-label"]};
+    color: ${(props) => props.theme["base-paragraph"]};
     font-size: 0.875rem;
   }
 
@@ -303,11 +329,11 @@ export const WeeklyCardWrapper = styled.li`
   }
 
   h3 {
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
   p {
-    color: ${(props) => props.theme["base-label"]};
+    color: ${(props) => props.theme["base-paragraph"]};
     font-size: 0.875rem;
   }
 

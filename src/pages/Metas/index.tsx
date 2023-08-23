@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card } from "../../components/UI/Card";
 import {
   CardMeta,
@@ -18,12 +19,12 @@ import {
   WeeklyTitle,
 } from "./styles";
 
-import itemTeste from "../../assets/Item-test.svg.svg";
 import { Trash } from "@phosphor-icons/react";
 import { Modal } from "../../components/Modal";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
 import { defaultTheme } from "../../styles/themes/default";
+import { Button } from "../../components/UI/Button";
 
 export function Metas() {
   const {
@@ -36,6 +37,8 @@ export function Metas() {
     deleteWeeklyLoading,
   } = useMetaContext();
 
+  const [deletingMeta, setDeletingMeta] = useState("");
+
   if (!user?.id) {
     return <p>Error no user</p>;
   }
@@ -45,7 +48,7 @@ export function Metas() {
       {modalVisibility && <Modal type="meta" />}
 
       <ModalWrapper>
-        <button onClick={handleOpenModal}>Adicionar uma nova meta</button>
+        <Button onClick={handleOpenModal}>Adicionar uma nova meta</Button>
       </ModalWrapper>
 
       <MetasContainer>
@@ -53,29 +56,35 @@ export function Metas() {
           <DailyTitle>Diárias</DailyTitle>
 
           <DiariaCardWrapper>
-            <DailyCard>
-              {user.dailies.length > 0 ? (
-                user.dailies.map((daily) => {
-                  return (
+            {user.dailies.length > 0 ? (
+              user.dailies.map((daily) => {
+                return (
+                  <DailyCard>
                     <Card padding={1.5} key={daily.id}>
                       <TitleCard>
                         <h3>{daily.title}</h3>
-                        {deleteDailyLoading ? (
+                        {deleteDailyLoading && deletingMeta === daily.id ? (
                           <Loading />
                         ) : (
-                          <button onClick={() => handleDeleteDaily(daily.id)} disabled={deleteDailyLoading}>
+                          <button
+                            onClick={() => {
+                              setDeletingMeta(daily.id);
+                              handleDeleteDaily(daily.id);
+                            }}
+                            disabled={deleteDailyLoading}
+                          >
                             <Trash size={20} color={defaultTheme["base-red"]} />
                           </button>
                         )}
                       </TitleCard>
                       <p>{daily.description}</p>
                     </Card>
-                  );
-                })
-              ) : (
-                <span>...</span>
-              )}
-            </DailyCard>
+                  </DailyCard>
+                );
+              })
+            ) : (
+              <span>...</span>
+            )}
           </DiariaCardWrapper>
         </DailyArea>
 
@@ -83,29 +92,35 @@ export function Metas() {
           <WeeklyTitle>Semanais</WeeklyTitle>
 
           <WeeklyCardWrapper>
-            <WeeklyCard>
-              {user.weeklies.length > 0 ? (
-                user.weeklies.map((weekly) => {
-                  return (
+            {user.weeklies.length > 0 ? (
+              user.weeklies.map((weekly) => {
+                return (
+                  <WeeklyCard>
                     <Card padding={1.5} key={weekly.id}>
                       <TitleCard>
                         <h3>{weekly.title}</h3>
-                        {deleteWeeklyLoading ? (
+                        {deleteWeeklyLoading && deletingMeta === weekly.id ? (
                           <Loading />
                         ) : (
-                          <button onClick={() => handleDeleteWeekly(weekly.id)} disabled={deleteDailyLoading}>
+                          <button
+                            onClick={() => {
+                              setDeletingMeta(weekly.id);
+                              handleDeleteWeekly(weekly.id);
+                            }}
+                            disabled={deleteDailyLoading}
+                          >
                             <Trash size={20} color={defaultTheme["base-red"]} />
                           </button>
                         )}
                       </TitleCard>
                       <p>{weekly.description}</p>
                     </Card>
-                  );
-                })
-              ) : (
-                <span>...</span>
-              )}
-            </WeeklyCard>
+                  </WeeklyCard>
+                );
+              })
+            ) : (
+              <span>...</span>
+            )}
           </WeeklyCardWrapper>
         </WeeklyArea>
 
@@ -113,15 +128,21 @@ export function Metas() {
           <MetaTitle>Metas</MetaTitle>
 
           <MetaCardWrapper>
-            <CardMeta>
-              <Card>
-                <img src={itemTeste} alt="" />
-                <div>
-                  <h3>Cinto Tungrade V</h3>
-                  <p>10.000.000</p>
-                </div>
-              </Card>
-            </CardMeta>
+            {user.goals.length > 0 ? (
+              user.goals.map(({ id, item }) => (
+                <CardMeta key={id}>
+                  <Card>
+                    <img src={item.image} alt="" />
+                    <div>
+                      <h3>{item.name}</h3>
+                      <p>{item.price.toLocaleString("pt-BR")}</p>
+                    </div>
+                  </Card>
+                </CardMeta>
+              ))
+            ) : (
+              <p>Você ainda não tem nenhuma meta</p>
+            )}
           </MetaCardWrapper>
         </MetasArea>
       </MetasContainer>

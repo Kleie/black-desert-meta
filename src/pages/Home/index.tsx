@@ -30,7 +30,6 @@ import {
   WeeklyTitle,
 } from "./styles";
 
-import itemTeste from "../../assets/Item-test.svg.svg";
 import gyfinTeste from "../../assets/gyfin-teste.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
@@ -67,41 +66,38 @@ export function Home() {
               Meta <span>2.000.000.000</span>
             </CurrentMetaTitle>
             {/* barra de progresso aqui */}
-            <ProgressBar></ProgressBar>
+            <ProgressBar progress={(user.goals[0].item.price / 2000000000) * 100}></ProgressBar>
             <CurrentMetaCardWrapper>
               <Card padding={0.5}>
-                <img src={itemTeste} alt="" />
+                <img src={user.goals[0].item.image} alt="" />
                 <div>
-                  <h3>Cinto Tungrade V</h3>
-                  <p>10.000.000</p>
-                </div>{" "}
+                  <h3>{user.goals[0].item.name}</h3>
+                  <p>{user.goals[0].item.price.toLocaleString("pt-BR")}</p>
+                </div>
               </Card>
             </CurrentMetaCardWrapper>
           </CurrentMetaContainer>
 
-          <NextMetaContainer>
-            <NextMetaTitle>Proximas Metas</NextMetaTitle>
-            <NextMetaList>
-              <CardWrapper>
-                <Card padding={0.5}>
-                  <img src={itemTeste} alt="" />
-                  <div>
-                    <h3>Cinto Tungrade V</h3>
-                    <p>10.000.000</p>
-                  </div>{" "}
-                </Card>
-              </CardWrapper>
-              <CardWrapper>
-                <Card padding={0.5}>
-                  <img src={itemTeste} alt="" />
-                  <div>
-                    <h3>Cinto Tungrade V</h3>
-                    <p>10.000.000</p>
-                  </div>
-                </Card>
-              </CardWrapper>
-            </NextMetaList>
-          </NextMetaContainer>
+          {user.goals.length > 1 && (
+            <NextMetaContainer>
+              <NextMetaTitle>Proximas Metas</NextMetaTitle>
+              <NextMetaList>
+                {user.goals
+                  .filter((goal) => goal.id !== user.goals[0].id)
+                  .map(({ id, item }) => (
+                    <CardWrapper key={id}>
+                      <Card padding={0.5}>
+                        <img src={item.image} alt="" />
+                        <div>
+                          <h3>{item.name}</h3>
+                          <p>{item.price.toLocaleString("pt-BR")}</p>
+                        </div>
+                      </Card>
+                    </CardWrapper>
+                  ))}
+              </NextMetaList>
+            </NextMetaContainer>
+          )}
         </MetaContainer>
 
         <GrindTrackerContainer>

@@ -23,6 +23,7 @@ export const Navigation = styled.nav`
     padding: 1.25rem 2rem;
 
     display: flex;
+    align-items: center;
     gap: 1rem;
 
     transition: all 0.4s ease;
