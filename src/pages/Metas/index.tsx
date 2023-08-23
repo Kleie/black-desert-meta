@@ -30,9 +30,9 @@ export function Metas() {
     user,
     modalVisibility,
     handleOpenModal,
-    handleDeleteDiary,
+    handleDeleteDaily,
     handleDeleteWeekly,
-    deleteDiaryLoading,
+    deleteDailyLoading,
     deleteWeeklyLoading,
   } = useMetaContext();
 
@@ -54,21 +54,21 @@ export function Metas() {
 
           <DiariaCardWrapper>
             <DailyCard>
-              {user.diaries.length > 0 ? (
-                user.diaries.map((diary) => {
+              {user.dailies.length > 0 ? (
+                user.dailies.map((daily) => {
                   return (
-                    <Card padding={1.5} key={diary.id}>
+                    <Card padding={1.5} key={daily.id}>
                       <TitleCard>
-                        <h3>{diary.title}</h3>
-                        {deleteDiaryLoading ? (
+                        <h3>{daily.title}</h3>
+                        {deleteDailyLoading ? (
                           <Loading />
                         ) : (
-                          <button onClick={() => handleDeleteDiary(diary.id)} disabled={deleteDiaryLoading}>
+                          <button onClick={() => handleDeleteDaily(daily.id)} disabled={deleteDailyLoading}>
                             <Trash size={20} color={defaultTheme["base-red"]} />
                           </button>
                         )}
                       </TitleCard>
-                      <p>{diary.description}</p>
+                      <p>{daily.description}</p>
                     </Card>
                   );
                 })
@@ -93,7 +93,7 @@ export function Metas() {
                         {deleteWeeklyLoading ? (
                           <Loading />
                         ) : (
-                          <button onClick={() => handleDeleteWeekly(weekly.id)} disabled={deleteDiaryLoading}>
+                          <button onClick={() => handleDeleteWeekly(weekly.id)} disabled={deleteDailyLoading}>
                             <Trash size={20} color={defaultTheme["base-red"]} />
                           </button>
                         )}

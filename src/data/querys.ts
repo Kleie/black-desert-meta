@@ -6,7 +6,7 @@ export const GET_USER = gql`
       id
       username
       avatar
-      diaries {
+      dailies {
         id
         title
         description

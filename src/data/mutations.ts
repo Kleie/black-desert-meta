@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_DIARY = gql`
-  mutation Mutation($newDiary: CreateDiaryInput!) {
-    createDiary(newDiary: $newDiary) {
+  mutation Mutation($newDaily: CreateDailyInput!) {
+    createDaily(newDaily: $newDaily) {
       id
       userId
       title
@@ -30,7 +30,7 @@ export const CREATE_WEEKLY = gql`
 
 export const DELETE_DIARY = gql`
   mutation Mutation($id: String!) {
-    deleteDiary(id: $id)
+    deleteDaily(id: $id)
   }
 `;
 
@@ -40,15 +40,32 @@ export const DELETE_WEEKLY = gql`
   }
 `;
 
-export const UPDATE_META_IS_COMPLETED = gql`
-  mutation Mutation($id: String!, $metaType: MetaTypeInput) {
-    updateMetaIsCompleted(id: $id, metaType: $metaType) {
+export const UPDATE_DAILY_IS_COMPLETED = gql`
+  mutation Mutation($updateDailyIsCompletedId: String!) {
+    updateDailyIsCompleted(id: $updateDailyIsCompletedId) {
       id
+      userId
       title
       description
       isCompleted
       resetDay
       createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_WEEKLY_IS_COMPLETED = gql`
+  mutation Mutation($updateDailyIsCompletedId: String!) {
+    updateDailyIsCompleted(id: $updateDailyIsCompletedId) {
+      id
+      userId
+      title
+      description
+      isCompleted
+      resetDay
+      createdAt
+      updatedAt
     }
   }
 `;

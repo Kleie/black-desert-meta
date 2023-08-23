@@ -1,6 +1,7 @@
 import { Card } from "../../components/UI/Card";
 import {
   CardListContainer,
+  CardVisibilityToggle,
   CardWrapper,
   CurrentMetaCardWrapper,
   CurrentMetaContainer,
@@ -33,10 +34,9 @@ import itemTeste from "../../assets/Item-test.svg.svg";
 import gyfinTeste from "../../assets/gyfin-teste.svg";
 
 import { useMetaContext } from "../../hooks/useMetaContext";
-import { TimeLeft, WeekLeft } from "../../components/Time";
 
 export function Home() {
-  const { user, loading, handleMetaCompleted } = useMetaContext();
+  const { user, loading, handleDiaryCompleted } = useMetaContext();
 
   if (loading) {
     return <p>Loading</p>;
@@ -46,7 +46,7 @@ export function Home() {
     return <p>Error no user</p>;
   }
 
-  const completedDaily = user?.diaries.filter((diaria) => {
+  const completedDaily = user?.dailies.filter((diaria) => {
     if (diaria.isCompleted) {
       return diaria;
     }
@@ -127,21 +127,22 @@ export function Home() {
           <DailyTitle>
             <h2>Diarias</h2>
             <div>
-              <span>{`concluidas ${completedDaily?.length} de ${user.diaries.length}`}</span>
-              <TimeLeft />
+              <span>{`concluidas ${completedDaily?.length} de ${user.dailies.length}`}</span>
             </div>
           </DailyTitle>
 
           <Daily>
             <DailyList>
               <DailyCardWrapper>
-                {user.diaries.length > 0 ? (
-                  user.diaries.map((diary) => {
+                {user.dailies.length > 0 ? (
+                  user.dailies.map((daily) => {
                     return (
-                      <Card padding={1} key={diary.id} onClick={() => handleMetaCompleted(diary.id, "diary")}>
-                        <h3>{diary.title}</h3>
-                        <p>{diary.description}</p>
-                      </Card>
+                      <CardVisibilityToggle completed={daily.isCompleted}>
+                        <Card padding={1} key={daily.id} onClick={() => handleDiaryCompleted(daily)}>
+                          <h3>{daily.title}</h3>
+                          <p>{daily.description}</p>
+                        </Card>
+                      </CardVisibilityToggle>
                     );
                   })
                 ) : (
@@ -157,8 +158,6 @@ export function Home() {
             <h2>Semanais</h2>
             <div>
               <span>{`concluidas ${completedWeekly?.length} de ${user.weeklies.length}`}</span>
-
-              <WeekLeft />
             </div>
           </WeeklyTitle>
 

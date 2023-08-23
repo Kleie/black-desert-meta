@@ -169,7 +169,6 @@ export const DailyAndWeeklyContainer = styled.div`
 `;
 
 // diarias
-
 export const DailyContainer = styled.div`
   padding: 0 1.5rem;
 `;
@@ -204,6 +203,17 @@ export const DailyList = styled.ul`
   max-height: 21.125rem;
   overflow: auto;
   overflow-x: hidden;
+
+  cursor: pointer;
+`;
+
+interface VisibilityCardProps {
+  completed: boolean;
+}
+export const CardVisibilityToggle = styled.div<VisibilityCardProps>`
+  opacity: ${(props) => (props.completed ? 0 : 1)};
+  position: ${(props) => (props.completed ? "absolute" : "")};
+  visibility: ${(props) => (props.completed ? "hidden" : "")};
 `;
 
 export const DailyCardWrapper = styled.li`
@@ -239,7 +249,6 @@ export const DailyCardWrapper = styled.li`
 `;
 
 // semanais
-
 export const WeeklyContainer = styled.div`
   padding: 0 1.5rem;
 `;

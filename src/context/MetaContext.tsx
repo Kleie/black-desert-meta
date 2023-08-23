@@ -2,7 +2,14 @@ import { addDays, startOfDay } from "date-fns";
 import { createContext, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER } from "../data/querys";
-import { CREATE_DIARY, CREATE_WEEKLY, DELETE_DIARY, DELETE_WEEKLY, UPDATE_META_IS_COMPLETED } from "../data/mutations";
+import {
+  CREATE_DIARY,
+  CREATE_WEEKLY,
+  DELETE_DIARY,
+  DELETE_WEEKLY,
+  UPDATE_DAILY_IS_COMPLETED,
+  UPDATE_WEEKLY_IS_COMPLETED,
+} from "../data/mutations";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
@@ -10,17 +17,17 @@ interface ContextProps {
   modalVisibility: boolean;
   handleOpenModal: () => void;
   handleCloseModal: () => void;
-  handleCreateDiary: (title: string, description: string) => void;
+  handleCreateDaily: (title: string, description: string) => void;
   handleCreateWeekly: (title: string, description: string) => void;
-  handleDeleteDiary: (metaId: string) => void;
+  handleDeleteDaily: (metaId: string) => void;
   handleDeleteWeekly: (metaId: string) => void;
-  handleMetaCompleted: (id: string, type: "diary" | "weekly") => void;
   handleLogout: () => void;
+  handleDiaryCompleted: (dailyToChange: Daily) => void;
   user?: User;
   loading: boolean;
-  createDiaryLoading: boolean;
+  createDailyLoading: boolean;
   createWeeklyLoading: boolean;
-  deleteDiaryLoading: boolean;
+  deleteDailyLoading: boolean;
   deleteWeeklyLoading: boolean;
 }
 
@@ -28,8 +35,8 @@ export interface GetUserResponse {
   user: User;
 }
 
-export interface CreateDiaryResponse {
-  createDiary: Diary;
+export interface CreateDailyResponse {
+  createDaily: Daily;
 }
 
 export interface CreateWeeklyResponse {
@@ -42,13 +49,13 @@ export interface User {
   discord_id: string;
   username: string;
   avatar: string;
-  diaries: Diary[];
+  dailies: Daily[];
   weeklies: Weekly[];
   createdAt: string;
   updatedAt: string;
 }
 
-export interface Diary {
+export interface Daily {
   __typename: string;
   id: string;
   userId: string;
@@ -72,7 +79,7 @@ export interface Weekly {
   updatedAt: string;
 }
 
-export interface NewDiary {
+export interface NewDaily {
   id: string;
   title: string;
   description: string;
@@ -98,10 +105,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
   const { data, loading, error } = useQuery<GetUserResponse>(GET_USER);
 
-  const [createDiary, { loading: createDiaryLoading }] = useMutation<CreateDiaryResponse>(CREATE_DIARY);
+  const [createDaily, { loading: createDailyLoading }] = useMutation<CreateDailyResponse>(CREATE_DIARY);
   const [createWeekly, { loading: createWeeklyLoading }] = useMutation<CreateWeeklyResponse>(CREATE_WEEKLY);
-  const [updateMetaIsCompleted] = useMutation<User>(UPDATE_META_IS_COMPLETED);
-  const [deleteDiary, { loading: deleteDiaryLoading }] = useMutation(DELETE_DIARY);
+  const [updateDailyIsCompleted] = useMutation<User>(UPDATE_DAILY_IS_COMPLETED);
+  const [updateWeeklyIsCompleted] = useMutation<User>(UPDATE_WEEKLY_IS_COMPLETED);
+  const [deleteDaily, { loading: deleteDailyLoading }] = useMutation(DELETE_DIARY);
   const [deleteWeekly, { loading: deleteWeeklyLoading }] = useMutation(DELETE_WEEKLY);
 
   const navigate = useNavigate();
@@ -117,18 +125,17 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     }
   }, [navigate, data, loading, error]);
 
-  async function handleCreateDiary(title: string, description: string) {
+  async function handleCreateDaily(title: string, description: string) {
     const now = new Date();
     const resetDay = startOfDay(addDays(now, 1));
 
-    const newDiary = {
+    const newDaily = {
       title: title,
       description: description,
       resetDay: resetDay.toISOString(),
     };
-    const { data } = await createDiary({ variables: { userId: user?.id, newDiary: newDiary } });
-    data && console.log("CRIEI ISSO AQUI Ó: ", data);
-    data && setUser((prevState) => ({ ...prevState, diaries: [...prevState.diaries, data.createDiary] }));
+    const { data } = await createDaily({ variables: { userId: user?.id, newDaily: newDaily } });
+    data && setUser((prevState) => ({ ...prevState, dailies: [...prevState.dailies, data.createDaily] }));
   }
 
   async function handleCreateWeekly(title: string, description: string) {
@@ -154,14 +161,14 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     data && setUser((prevState) => ({ ...prevState, weeklies: [...prevState.weeklies, data.createWeekly] }));
   }
 
-  async function handleDeleteDiary(metaId: string) {
-    const diariesWhithoutOne = user.diaries.filter((diary) => {
-      if (diary.id !== metaId) {
-        return diary;
+  async function handleDeleteDaily(metaId: string) {
+    const dailiesWhithoutOne = user.dailies.filter((daily) => {
+      if (daily.id !== metaId) {
+        return daily;
       }
     });
-    await deleteDiary({ variables: { id: metaId } });
-    setUser((prevState) => ({ ...prevState, diaries: diariesWhithoutOne }));
+    await deleteDaily({ variables: { id: metaId } });
+    setUser((prevState) => ({ ...prevState, dailies: dailiesWhithoutOne }));
   }
 
   async function handleDeleteWeekly(metaId: string) {
@@ -179,12 +186,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     navigate("/login");
   }
 
-  function handleMetaCompleted(id: string, type: "diary" | "weekly") {
-    updateMetaIsCompleted({
-      variables: { id: id, metaType: type },
-    });
-  }
-
   function handleOpenModal() {
     setModalVisibility(true);
   }
@@ -193,23 +194,41 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     setModalVisibility(false);
   }
 
+  async function handleDiaryCompleted(dailyToChange: Daily) {
+    setUser((prevstate) => {
+      const newDailyList = prevstate.dailies.map((daily) => {
+        if (daily.id === dailyToChange.id) {
+          return { ...daily, isCompleted: true };
+        }
+
+        return daily;
+      });
+      return { ...prevstate, dailies: newDailyList };
+    });
+
+    await updateDailyIsCompleted({
+      variables: { updateDailyIsCompletedId: dailyToChange.id },
+    });
+  }
+
+  console.log(user);
   return (
     <Context.Provider
       value={{
         modalVisibility,
         handleOpenModal,
         handleCloseModal,
-        handleCreateDiary,
+        handleCreateDaily,
         handleCreateWeekly,
-        handleDeleteDiary,
+        handleDeleteDaily,
         handleDeleteWeekly,
-        handleMetaCompleted,
         handleLogout,
+        handleDiaryCompleted,
         user,
         loading,
-        createDiaryLoading,
+        createDailyLoading,
         createWeeklyLoading,
-        deleteDiaryLoading,
+        deleteDailyLoading,
         deleteWeeklyLoading,
       }}
     >

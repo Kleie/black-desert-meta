@@ -37,7 +37,7 @@ interface ModalProps {
 }
 
 export function Modal(props: ModalProps) {
-  const [radio, setRadio] = useState<"diary" | "weekly" | "meta">("diary");
+  const [radio, setRadio] = useState<"daily" | "weekly" | "meta">("daily");
   const [level, setLevel] = useState("V");
 
   const [isFocused, setIsFocused] = useState(false);
@@ -49,10 +49,10 @@ export function Modal(props: ModalProps) {
   const [inputIsFocused, setInputIsFocused] = useState(false);
   const grindInputRef = useRef<HTMLInputElement>(null);
 
-  const { handleCloseModal, handleCreateDiary, handleCreateWeekly, createDiaryLoading, createWeeklyLoading } =
+  const { handleCloseModal, handleCreateDaily, handleCreateWeekly, createDailyLoading, createWeeklyLoading } =
     useMetaContext();
 
-  function handleSelectRadio(targetRadio: "diary" | "weekly" | "meta") {
+  function handleSelectRadio(targetRadio: "daily" | "weekly" | "meta") {
     setRadio(targetRadio);
   }
 
@@ -65,7 +65,7 @@ export function Modal(props: ModalProps) {
   }
 
   function onCreateNewMeta() {
-    radio === "diary" && handleCreateDiary(titleInput, descriptionInput);
+    radio === "daily" && handleCreateDaily(titleInput, descriptionInput);
     radio === "weekly" && handleCreateWeekly(titleInput, descriptionInput);
 
     setTitleInput("");
@@ -91,8 +91,8 @@ export function Modal(props: ModalProps) {
               <label>Meta</label>
               <div>
                 <div>
-                  <input type="radio" readOnly name="metas" value="diaria" checked={radio === "diary"} />
-                  <label htmlFor="diaria" onClick={() => handleSelectRadio("diary")}>
+                  <input type="radio" readOnly name="metas" value="diaria" checked={radio === "daily"} />
+                  <label htmlFor="diaria" onClick={() => handleSelectRadio("daily")}>
                     Diaria
                   </label>
                 </div>
@@ -261,7 +261,7 @@ export function Modal(props: ModalProps) {
             )}
 
             <FooterModal>
-              {createDiaryLoading || createWeeklyLoading ? (
+              {createDailyLoading || createWeeklyLoading ? (
                 <Loading />
               ) : (
                 <Button onClick={onCreateNewMeta} disabled={titleInput.length <= 0 && descriptionInput.length <= 0}>
